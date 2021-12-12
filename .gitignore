@@ -58,3 +58,11 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+ios/Podfile.lock
+yarn.lock
+.gitignore
+package-lock.json
+.gitignore
+ios/baytonia.xcworkspace/contents.xcworkspacedata
+ios/baytonia.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+ios/baytonia.xcodeproj/project.pbxproj
