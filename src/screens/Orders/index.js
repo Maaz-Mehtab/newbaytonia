@@ -69,15 +69,11 @@ function Order(props) {
 
 
                 <View style={styles.itemView}>
-                    <Text size={'xSmall'}>{item.orderId}</Text>
+                    <Text size={'xSmall'}>Order No : {item.orderId}</Text>
                 </View>
 
                 <View style={styles.itemView}>
                     <Text size={'xSmall'}>Created Date : {item.date}</Text>
-                </View>
-
-                <View style={styles.itemView}>
-                    <Text size={'xSmall'}>Total : {item.amount}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -86,21 +82,7 @@ function Order(props) {
         <LinearGradient colors={['#f2f2f2', '#f2f2f2']} style={styles.container}>
             <SafeAreaView style={styles.container}>
                 <View style={{ marginTop: 20 }}>
-                    <View style={styles.mainView}>
-                        <View>
-                            <Text size={'xLarge2'} type={"heading"}>Purchase Orders</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', }}>
-                            <View style={styles.buttonIconView}>
-                                <Icon.FontAwesome name="filter" size={20} color={Colors.white} />
-                            </View>
-                            <View style={[styles.buttonIconView, { marginRight: 0 }]}>
-                                <Icon.FontAwesome name="sort" size={20} color={Colors.white} />
-                            </View>
-                        </View>
-                    </View>
-
-                    <View style={{ paddingBottom: 200, }}>
+                   <View style={{ paddingBottom: 10, }}>
                         <FlatList
                             data={orders}
                             renderItem={renderItem}

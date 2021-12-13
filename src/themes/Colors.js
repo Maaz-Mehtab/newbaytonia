@@ -133,9 +133,13 @@ export default {
 
   rowColor: "#dbdbdb",
 
-  gradientColor: ["#5F63D6", "#4B4E9F"],
-  themeColor: "#5F63D6",
+  // gradientColor: ["#5F63D6", "#4B4E9F"],
+  gradientColor: ["#ff5722", "#ff7043"],
 
+  // gradientColor: [ "#b33636","#450b1f"],
+  // themeColor: "#5F63D6",
+  // themeColor:'#450b1f',
+  themeColor:'#ff5722',
   // subHeading: "#D5D5D5",
   // placeholderColor: "#D5D5D5",
   // inputColor: "#4E4E4E",
@@ -143,6 +147,11 @@ export default {
   // borderColor: "#E6E6E6",
   // subHeading: "#676767",
   // logoutColor: "#D80101",
+
+
+  // colorAccent: '#6b8aa6',
+  // colorPrimary: '#733646',
+  // colorPrimaryDark: '#450b1f'
 
   subHeading: "#D5D5D5",
   placeholderColor: "#b6b6b6",

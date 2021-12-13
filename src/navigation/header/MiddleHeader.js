@@ -1,10 +1,15 @@
 import * as React from 'react';
-import { View, Button, TouchableOpacity } from 'react-native';
+import { View, Button, TouchableOpacity,Text } from 'react-native';
 import { Colors } from '../../themes';
-import Text from '../../components/Text';
+// import Text from '../../components/Text';
 const MiddleHeader = (props) => {
+    if(props=="Home"){
+        return null
+        
+    }
+    else
     return (
-        <Text size={"large"}>{props}</Text>
+        <Text style={{color:Colors.themeColor,fontSize:16,fontWeight:'bold'}} >{props}</Text>
     )
 }
 export default MiddleHeader

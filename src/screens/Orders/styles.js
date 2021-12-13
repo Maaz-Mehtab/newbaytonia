@@ -52,7 +52,7 @@ export default StyleSheet.create({
     },
     headerText: {
         color: Colors.white,
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
     }
 
 });
