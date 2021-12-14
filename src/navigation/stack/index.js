@@ -9,10 +9,11 @@ import DrawerNavigator from '../drawer'
 import MiddleHeader from '../header/MiddleHeader';
 import LeftHeader from '../header/LeftHeader';
 import RightHeader from '../header/RightHeader';
+import { Colors } from '../../themes';
 
 
 StatusBar.setTranslucent(false);
-StatusBar.setBackgroundColor('#5F63D6');
+StatusBar.setBackgroundColor(Colors.themeColor);
 StatusBar.setHidden(false)
 const Stack = createNativeStackNavigator();
 

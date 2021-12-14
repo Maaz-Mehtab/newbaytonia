@@ -10,7 +10,7 @@ const LeftHeader = (props) => {
         return (
             <TouchableOpacity
                 style={{ marginLeft: 20 }}
-                onPress={() => alert('This is a button!')}
+                onPress={() => console.log("navigation",navigation.openDrawer())}
             >
                 <Icon.Ionicons name="menu" color={Colors.themeColor} size={28} />
             </TouchableOpacity>

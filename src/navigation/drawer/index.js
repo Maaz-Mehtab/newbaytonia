@@ -7,18 +7,20 @@ import LeftHeader from '../header/LeftHeader';
 import RightHeader from '../header/RightHeader';
 import MiddleHeader from '../header/MiddleHeader';
 import Detail from '../../screens/Detail';
+import  DrawerContent  from './DrawerContent';
 
 function DrawerNavigator(props) {
     return (
-        <Drawer.Navigator>
-            <Drawer.Screen   name="Home" component={Home} options={{
-                headerShadowVisible:false,
+        <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}
+            drawerStyle={{ width: '100%' }}
+        >
+            <Drawer.Screen name="Home" component={Home} options={{
+                headerShadowVisible: false,
                 headerTitle: (props) => MiddleHeader("Home"),
                 headerLeft: (props) => LeftHeader("Home"),
                 headerRight: (props) => RightHeader("Home"),
             }} />
-           
-           <Drawer.Screen name="Order" component={Order} options={{
+                <Drawer.Screen name="Order" component={Order} options={{
                 headerTitle: (props) => MiddleHeader("Order"),
                 headerLeft: (props) => LeftHeader("Order"),
                 headerRight: (props) => RightHeader("Order"),
@@ -29,7 +31,7 @@ function DrawerNavigator(props) {
                 headerLeft: (props) => LeftHeader("Detail"),
                 headerRight: (props) => RightHeader("Detail"),
             }} />
-        </ Drawer.Navigator>
+        </Drawer.Navigator>
     );
 }
 
