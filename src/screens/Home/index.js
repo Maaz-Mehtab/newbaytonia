@@ -12,11 +12,17 @@ class Home extends React.Component {
         super(props);
         this.state = {
             selectedIndex: 0,
+            isOnline:true
 
         }
 
     }
 
+        setOnline = ()=>{
+            this.setState({
+                isOnline:!this.state.isOnline
+            })
+        }
     setSelectedItem = (id) => {
         this.setState({
             selectedIndex: id
@@ -92,8 +98,8 @@ class Home extends React.Component {
                                 />
                             }
 
-                            btnPress={() => null}
-                            label={"You Are offline"} />
+                            btnPress={() => this.setOnline()}
+                            label={(this.state.isOnline)?"You Are offline":"You Are Online"} />
                     </View>
                 </View>
 
