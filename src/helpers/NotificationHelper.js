@@ -6,28 +6,30 @@ import { updateToken } from "../actions/AppSettings";
 import { DataHelper } from "../helpers";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 class NotificationsHelper {
-  getToken = () => {
-    messaging()
-      .getToken()
-      .then((token) => {
-        //   console.log("token",token)
-        // DataHelper.getStore().dispatch(updateToken(token));
+  // getToken = () => {
+  //   messaging()
+  //     .getToken()
+  //     .then((token) => {
+  //       console.log("token",token);
+  //       Storage.fcmToken =token
 
-        // if (DataHelper.isUserAuthenticated()) {
-        //   DataHelper.updateDeviceTokenOnServer(token);
-        // }
-        
-        return token;
-      });
-  };
+
+  //       return token;
+  //     });
+  // };
+
+  getToken = async () => {
+    let token =await messaging.getToken()
+    console.log("!@ token",token)
+  }
 
   refreshToken = () => {
     messaging().onTokenRefresh((token) => {
-    //   DataHelper.getStore().dispatch(updateToken(token));
+      //   DataHelper.getStore().dispatch(updateToken(token));
 
-    //   if (DataHelper.isUserAuthenticated()) {
-    //     DataHelper.updateDeviceTokenOnServer(token);
-    //   }
+      //   if (DataHelper.isUserAuthenticated()) {
+      //     DataHelper.updateDeviceTokenOnServer(token);
+      //   }
     });
   };
 
@@ -140,7 +142,7 @@ class NotificationsHelper {
     if (!utils.isPlatformAndroid()) {
       messaging()
         .getIsHeadless()
-        .then((isHeadless) => {});
+        .then((isHeadless) => { });
     }
     messaging().onNotificationOpenedApp((remoteMessage) => {
       const data = remoteMessage.data;

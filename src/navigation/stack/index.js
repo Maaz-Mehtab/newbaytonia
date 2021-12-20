@@ -10,7 +10,7 @@ import MiddleHeader from '../header/MiddleHeader';
 import LeftHeader from '../header/LeftHeader';
 import RightHeader from '../header/RightHeader';
 import { Colors } from '../../themes';
-
+import { useDispatch, useSelector } from 'react-redux';
 
 StatusBar.setTranslucent(false);
 StatusBar.setBackgroundColor(Colors.themeColor);
@@ -18,12 +18,12 @@ StatusBar.setHidden(false)
 const Stack = createNativeStackNavigator();
 
 function StackNavigator() {
+    const { login } = useSelector(a => a.AuthReducers);
     return (
-
-        <Stack.Navigator  options={{ headerShown: false }} >
+        <Stack.Navigator initialRouteName={login == "" ? "Login" : "Drawer"} options={{ headerShown: false }} >
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-            <Stack.Screen  name="Drawer" component={DrawerNavigator} options={{ headerShown: false }} />
-           
+            <Stack.Screen name="Drawer" component={DrawerNavigator} options={{ headerShown: false }} />
+
         </Stack.Navigator>
 
     );

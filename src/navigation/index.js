@@ -3,18 +3,29 @@ import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import NotificationsHelper from '../helpers/NotificationHelper';
 import StackNavigator from './stack'
+import { Provider } from 'react-redux';
+import {
+    store,
+    persistor
+} from '../store'
+import {
+    PersistGate
+} from 'redux-persist/integration/react';
+import Toast from 'react-native-toast-message'
 
 
-
-let firebaseToken = NotificationsHelper.getToken();
-let notif = NotificationsHelper.initializeFCM();
-console.log("firebaseToken", firebaseToken);
-console.log("notif", notif);
+// let notif = NotificationsHelper.initializeFCM();
+// console.log("notif", notif);
 function App() {
     return (
-        <NavigationContainer>
-            <StackNavigator />
-        </NavigationContainer>
+        <Provider store={store}>
+            <PersistGate persistor={persistor}>
+                <NavigationContainer>
+                    <StackNavigator />
+                    <Toast ref={(ref) => Toast.setRef(ref)} />
+                </NavigationContainer>
+            </PersistGate>
+        </Provider>
     );
 }
 

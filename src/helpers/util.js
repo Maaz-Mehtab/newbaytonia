@@ -1,5 +1,5 @@
 import { Platform, Alert, ToastAndroid, NativeModules } from "react-native";
-
+import Toast, { BaseToast, ErrorToast } from 'react-native-toast-message';
 class Util {
 
 
@@ -78,7 +78,31 @@ class Util {
             }, 500);
         }
     }
-
+   errorMsg = (desc) => {
+        Toast.show({
+            type: 'error',
+            text1: "Error",
+            text2: desc,
+            position: 'bottom',
+            visibilityTime: 4000,
+            topOffset: 30,
+            bottomOffset: 40,
+    
+        });
+    }
+    
+     successMsg = (desc) => {
+        Toast.show({
+            type: 'success',
+            text1: "Congrats",
+            text2: desc,
+            position: 'bottom',
+            visibilityTime: 4000,
+            topOffset: 30,
+            bottomOffset: 40,
+    
+        });
+    }
 
 }
 

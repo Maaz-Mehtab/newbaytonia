@@ -40,7 +40,7 @@ Text.defaultProps = {
   ...TextRN.defaultProps,
   size: Platform.OS == "ios" ? "small" : "normal",
   type: "base",
-  color: "descriptionColor",
+  color: "#000",
   textAlign: "left",
 };
 

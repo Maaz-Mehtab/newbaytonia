@@ -6,20 +6,57 @@ import Icon from "../../helpers/Icons";
 import styles from "./styles";
 import Button from '../../components/Button';
 import LinearGradient from 'react-native-linear-gradient';
-import SplashScreen from 'react-native-splash-screen'
+import SplashScreen from 'react-native-splash-screen';
+import messaging from "@react-native-firebase/messaging";
+import Buffer from 'buffer';
+import userAction from '../../store/action/user';
+import { useDispatch } from "react-redux";
+import Toast from 'react-native-toast-message';
+import util from '../../helpers/util'
 function Login({ navigation }) {
-    const [state, setState] = React.useState({ email: '', password: '' })
+    const dispatch = useDispatch();
+    // const [state, setState] = React.useState({ email: 'db@baytonia.com', password: 'Db123456789!!' })
+    const [state, setState] = React.useState({ email: 'db@baytonia.com', password: 'Db123456789!' })
+   
     const _handleTextChange = (name, val) => {
         setState({
             ...state,
             [name]: val
         })
     }
+
     SplashScreen.hide()
-    const login = () => {
-        console.log("login");
-        navigation.navigate("Drawer")
+
+  
+    const fetchFCMToken = async () => {
+        const fcmToken = await messaging().getToken()
+        return fcmToken
     }
+
+    const login = async () => {
+        let fcmToken = await fetchFCMToken();
+        let loginrequestObject = {
+            "login": state.email,
+            "pwd": state.password
+        }
+        let loginRequestString = JSON.stringify(loginrequestObject)
+        let loginRequestBase64 = Buffer.Buffer.from(loginRequestString).toString("base64")
+        let requestbody = {
+            "fcmToken": fcmToken,
+            "fcmDeviceId": "DoctorStrange",
+            "login":loginRequestBase64
+        }
+        dispatch(userAction.login(requestbody)).then(res => {
+            if (res?.success) {
+                util.successMsg(res?.message)
+                navigation.navigate("Drawer")
+            }
+            else{
+                util.errorMsg(res?.message)
+            }
+        })
+    }
+
     return (
         <LinearGradient colors={['#f2f2f2', '#f2f2f2']} style={styles.container}>
             <SafeAreaView style={styles.container}>
@@ -68,7 +105,7 @@ function Login({ navigation }) {
                         <Button btnPress={login} label={"Login"} />
                     </View>
                 </View>
-
+                <Toast ref={(ref) => Toast.setRef(ref)} />
             </SafeAreaView>
         </LinearGradient>
     );
