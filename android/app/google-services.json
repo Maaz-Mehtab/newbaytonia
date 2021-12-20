@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1033943185515",
+    "firebase_url": "https://baytonia-delivery-boy.firebaseio.com",
+    "project_id": "baytonia-delivery-boy",
+    "storage_bucket": "baytonia-delivery-boy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033943185515:android:20708bac36696803af592e",
+        "android_client_info": {
+          "package_name": "com.baytonia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033943185515-ntptgjduritqmdfqeg9n1p50e502fssc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARk4Nc30J-MJrrlN5VjmYsVu1qXBQYZWU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033943185515-ntptgjduritqmdfqeg9n1p50e502fssc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
