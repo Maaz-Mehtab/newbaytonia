@@ -1,5 +1,4 @@
 import { BaseURL ,BASIC_AUTH_KEY} from '../helpers/config';
-import axios from 'axios';
 const dev_url = BaseURL
 
 const Api = {
@@ -23,22 +22,19 @@ const Api = {
             })
 
             let jsonResponse = await response.json(response);
-
-            console.log(response);
-
-            if (response.status == 200) {
+             if (response.status == 200) {
                 return Promise.resolve(jsonResponse);
             }
             else
                 return Promise.reject(jsonResponse);
         },
     get:
-        async (endpoint, token) => {
+        async (endpoint,data) => {
             let url = dev_url + endpoint;
             let headers = {
-                'Content-Type': 'application/json',
-                "X-Requested-With": "application/x-www-form-urlencoded",
-                "auth-token": token
+                "Accept": "application/json",
+                "Authorization":BASIC_AUTH_KEY,
+                "lang":'en_US'
             }
             let response = await fetch(url, {
                 headers: headers,
@@ -48,7 +44,6 @@ const Api = {
 
             let jsonResponse = await response.json(response);
 
-            console.log(response);
 
             if (response.status == 200) {
                 return Promise.resolve(jsonResponse);
