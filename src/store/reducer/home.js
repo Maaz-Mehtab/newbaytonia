@@ -2,7 +2,8 @@ const INITIAL_STATE = {
 
     loading: false,
     deliverOrder: '',
-    returnOrder: ''
+    returnOrder: '',
+    oderDetail:'',
 }
 import { actionTypes } from '../action/actionTypes';
 export default (state = INITIAL_STATE, action) => {
@@ -14,6 +15,13 @@ export default (state = INITIAL_STATE, action) => {
                 loading: false,
                 deliverOrder: action.payload
             })
+            case actionTypes.FETCH_ORDER_DETAIL:
+                return ({
+                    ...state,
+                    loading: false,
+                    oderDetail: action.payload
+                })
+            
         case actionTypes.FETCH_RETURN_ORDER:
             return ({
                 ...state,

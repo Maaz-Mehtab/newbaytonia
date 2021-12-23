@@ -11,6 +11,8 @@ import LeftHeader from '../header/LeftHeader';
 import RightHeader from '../header/RightHeader';
 import { Colors } from '../../themes';
 import { useDispatch, useSelector } from 'react-redux';
+import Home from '../../screens/Home';
+import Detail from '../../screens/Detail';
 
 StatusBar.setTranslucent(false);
 StatusBar.setBackgroundColor(Colors.themeColor);
@@ -23,7 +25,23 @@ function StackNavigator() {
         <Stack.Navigator initialRouteName={login == "" ? "Login" : "Drawer"} options={{ headerShown: false }} >
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
             <Stack.Screen name="Drawer" component={DrawerNavigator} options={{ headerShown: false }} />
-
+            <Stack.Screen name="Home" component={Home} options={{
+                headerShadowVisible: false,
+                headerTitle: (props) => MiddleHeader("Home"),
+                headerLeft: (props) => LeftHeader("Home"),
+                headerRight: (props) => RightHeader("Home"),
+            }} />
+            <Stack.Screen name="Order" component={Order} options={{
+                headerTitle: (props) => MiddleHeader("Order"),
+                headerLeft: (props) => LeftHeader("Order"),
+                headerRight: (props) => RightHeader("Order"),
+            }} />
+            <Stack.Screen name="Detail" component={Detail} options={{
+                headerShadowVisible: false,
+                headerTitle: (props) => MiddleHeader("Detail"),
+                headerLeft: (props) => LeftHeader("Detail"),
+                headerRight: (props) => RightHeader("Detail"),
+            }} />
         </Stack.Navigator>
 
     );

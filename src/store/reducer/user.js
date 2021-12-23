@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
     userdata: '',
-    login:'',
+    login: '',
     access_token: '',
     loading: false,
 }
@@ -13,7 +13,7 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 userdata: action.payload,
-                login:action.payload?.login
+                login: action.payload?.login
             })
         case actionTypes.SIGNUP:
             return ({
@@ -25,6 +25,7 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 access_token: '',
                 userdata: '',
+                login:'',
                 loading: false,
             })
         case actionTypes.LOADER_ON:

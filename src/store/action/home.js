@@ -32,13 +32,14 @@ export default {
             }
         }
     },
-    signup: (data) => {
+   
+    orderDetail: (id,login) => {
         return async dispatch => {
             dispatch({ type: actionTypes.LOADER_ON })
             try {
-                let signupSuccess = await Api.post(Endpoints.Auth.signup, data, false)
-                dispatch({ type: actionTypes.SIGNUP, payload: signupSuccess })
-                return Promise.resolve(signupSuccess)
+                let response = await Api.get(Endpoints.Auth.delivery_boy + "pickings/" + id, login)
+                dispatch({ type: actionTypes.FETCH_ORDER_DETAIL, payload: response })
+                return Promise.resolve(response)
             } catch (error) {
                 dispatch({ type: actionTypes.LOADER_OFF })
                 return Promise.reject(error)
@@ -46,17 +47,18 @@ export default {
         }
     },
 
-    logout: (data) => {
+    acceptOrder: (id,data,login) => {
         return async dispatch => {
             dispatch({ type: actionTypes.LOADER_ON })
             try {
-                let logoutSuccess = await Api.post(Endpoints.Auth.logout, data, false)
-                dispatch({ type: actionTypes.LOGOUT, payload: logoutSuccess })
-                return Promise.resolve(logoutSuccess)
+                let response = await Api.put(Endpoints.Auth.delivery_boy+"pickings/"+id, data,login)
+                dispatch({ type: actionTypes.ACCEPT_ORDER, payload: response })
+                return Promise.resolve(response)
             } catch (error) {
                 dispatch({ type: actionTypes.LOADER_OFF })
                 return Promise.reject(error)
             }
         }
     },
+   
 }

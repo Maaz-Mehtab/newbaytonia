@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, SafeAreaView, TouchableOpacity } from 'react-native';
+import { View, SafeAreaView, TouchableOpacity ,ActivityIndicator,} from 'react-native';
 import { connect } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import Text from '../../components/Text';
@@ -41,11 +41,31 @@ class Home extends React.Component {
         })
     }
 
+    navigationOrder =(param)=>{
+        let data = [];
+        if(this.state.selectedIndex ==0){
+            data = this.props.order?.deliverOrder?.deliveryBoyPickings[param]
+            data = data.filter(a => a.DeliveryType == "order")
+        }
+        else{
+            data = this.props.order?.returnOrder?.deliveryBoyPickings[param]
+            data = data.filter(a => a.DeliveryType != "order")
+        }
+        this.props.navigation.push("Order", { data: data, title: param, type: this.state.selectedIndex })
+    }
+
     render() {
-        const {deliverOrder ,returnOrder } = this.props.order
+        const {deliverOrder ,returnOrder,loading } = this.props.order
+        // console.log("user",this.props.user);
+        // console.log("deliverOrder",deliverOrder);
+        // console.log("returnOrder",returnOrder);
+        console.log("loading",loading);
         return (
             <LinearGradient colors={['#f2f2f2', '#f2f2f2']} style={styles.container}>
                 <SafeAreaView style={styles.safeAreaTop} />
+                {loading && <View style={{ width: '100%', height: Metrics.vh * 85, backgroundColor: Colors.border, opacity: 0.2, position: 'absolute', alignSelf: 'center', alignItems: 'center', justifyContent: 'center', zIndex: 1 }}>
+                    <ActivityIndicator color={Colors.themeColor} size="large" />
+                </View>}
                 <View style={styles.mainTopView}>
                     <View style={styles.ParentTopView}>
                         <View style={styles.ordersView}>
@@ -82,15 +102,15 @@ class Home extends React.Component {
                 </View>
 
                 <View style={{ marginBottom: 20, }}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate("Order")} style={styles.listButtonView}>
+                    <TouchableOpacity onPress={() => this.navigationOrder("assigned")} style={styles.listButtonView}>
                         <Icons.AntDesign name="exclamationcircle" color={Colors.themeColor} size={20} />
                         <Text style={styles.ordersText}>Assigned Orders</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.listButtonView}>
+                    <TouchableOpacity onPress={() => this.navigationOrder("accept")} style={styles.listButtonView}>
                         <Icons.AntDesign name="pluscircle" color={Colors.themeColor} size={20} />
                         <Text style={styles.ordersText}>Accepted Orders</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.listButtonView}>
+                    <TouchableOpacity onPress={() => this.navigationOrder("delivered")} style={styles.listButtonView}>
                         <Icons.AntDesign name="checkcircle" color={Colors.themeColor} size={20} />
                         <Text style={styles.ordersText}>Complete Orders</Text>
                     </TouchableOpacity>

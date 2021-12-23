@@ -16,7 +16,7 @@ import util from '../../helpers/util'
 function Login({ navigation }) {
     const dispatch = useDispatch();
     // const [state, setState] = React.useState({ email: 'db@baytonia.com', password: 'Db123456789!!' })
-    const [state, setState] = React.useState({ email: 'db@baytonia.com', password: 'Db123456789!' })
+    const [state, setState] = React.useState({ email: 'app.dev@baytonia.com', password: 'M123456!' })
    
     const _handleTextChange = (name, val) => {
         setState({

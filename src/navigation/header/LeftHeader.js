@@ -18,7 +18,7 @@ const LeftHeader = (props) => {
     }
     else {
         return (
-            <Icon.Ionicons name="arrow-back" style={{ marginLeft: 20 }} onPress={() => navigation.goBack()} color={Colors.themeColor} size={28} />
+            <Icon.Ionicons name="arrow-back" style={{ marginLeft: 20 }} onPress={() => navigation.goBack(-1)} color={Colors.themeColor} size={28} />
         )
     }
 }

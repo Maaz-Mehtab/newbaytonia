@@ -48,7 +48,11 @@ export default StyleSheet.create({
         backgroundColor: Colors.themeColor,
         width: '100%',
         height: 45,
-        justifyContent: 'center',
+        // justifyContent: 'center',
+        flex:1,
+        alignItems:'center',
+        justifyContent:'space-between',
+        flexDirection:'row'
     },
     headerText: {
         color: Colors.white,

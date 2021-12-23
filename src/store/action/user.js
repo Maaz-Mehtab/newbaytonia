@@ -37,9 +37,9 @@ export default {
         return async dispatch => {
             dispatch({ type: actionTypes.LOADER_ON })
             try {
-                let logoutSuccess = await Api.post(Endpoints.Auth.logout, data, false)
-                dispatch({ type: actionTypes.LOGOUT, payload: logoutSuccess })
-                return Promise.resolve(logoutSuccess)
+                // let logoutSuccess = await Api.post(Endpoints.Auth.logout, data, false)
+                dispatch({ type: actionTypes.LOGOUT, payload: {} })
+                return Promise.resolve(true)
             } catch (error) {
                 dispatch({ type: actionTypes.LOADER_OFF })
                 return Promise.reject(error)

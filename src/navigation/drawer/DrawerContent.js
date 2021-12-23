@@ -15,8 +15,6 @@ import {
     DrawerItem
 } from '@react-navigation/drawer';
 import { store } from '../../store'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Feather from 'react-native-vector-icons/Feather';
 import Entypo from 'react-native-vector-icons/Entypo';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
@@ -25,10 +23,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { CommonActions } from '@react-navigation/native';
 import { Colors, Metrics } from '../../themes';
 import { Switch } from 'react-native-paper';
+import userAction from '../../store/action/user';
 function DrawerContent(props) {
+    const dispatch = useDispatch();
+    const navigation = useNavigation();
     const [isSwitchOn, setIsSwitchOn] = React.useState(false);
     const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
-    const navigation = useNavigation();
+    const { userdata } = useSelector(state => state.AuthReducers)
+ 
+   logoutUser = ()=>{
+        
+        dispatch(userAction.logout())
+        navigation.navigate('Login', { screen: 'Login' })
+    }
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{
@@ -43,8 +50,8 @@ function DrawerContent(props) {
 
                     <FontAwesome name="user-circle" size={50} style={{}} color={Colors.white} />
                     <View style={{ flexDirection: 'column', }}>
-                        <Text style={{ paddingLeft: 15, fontSize: Metrics.ratio(16), color: Colors.white }}>user name</Text>
-                        <Text style={{ paddingLeft: 15, fontSize: Metrics.ratio(16), color: Colors.white }}>abc@gmail.com</Text>
+                        <Text style={{ paddingLeft: 15, fontSize: Metrics.ratio(16), color: Colors.white }}>{userdata.deliveryBoyName}</Text>
+                        <Text style={{ paddingLeft: 15, fontSize: Metrics.ratio(16), color: Colors.white }}>{userdata.deliveryBoyEmail}</Text>
                     </View>
                 </View>
             </View>
@@ -81,7 +88,7 @@ function DrawerContent(props) {
                 </View>
 
 
-                <TouchableOpacity onPress={() => navigation.navigate('Login', { screen: 'Login' })}
+                <TouchableOpacity onPress={() => logoutUser()}
                     style={{ borderBottomColor: Colors.placeholderColor, borderBottomWidth: 1, flexDirection: 'row', paddingHorizontal: 20, justifyContent: 'space-between', alignItems: 'center', height: 50 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                         <Entypo name="log-out" size={20} style={{}} color={Colors.text} />
