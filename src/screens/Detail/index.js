@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, SafeAreaView, ActivityIndicator, Image, Platform, FlatList, TouchableOpacity, } from 'react-native';
+import { View, SafeAreaView, ActivityIndicator, Image, Platform, FlatList, TouchableOpacity, Linking} from 'react-native';
 
 import { useSelector, useDispatch } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';

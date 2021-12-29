@@ -1,3 +1,5 @@
+import axios from 'axios';
+import { cos } from 'react-native-reanimated';
 import { BaseURL, BASIC_AUTH_KEY } from '../helpers/config';
 const dev_url = BaseURL
 
@@ -15,18 +17,13 @@ const Api = {
             let obj = {};
             obj.fcmToken = data.fcmToken;
             obj.fcmDeviceId = data.fcmDeviceId
-            let response = await fetch(url, {
-                headers: headers,
-                method: 'POST',
-                body: JSON.stringify(data)
-            })
 
-            let jsonResponse = await response.json(response);
+            let response = await axios.post(url, JSON.stringify(data), { headers })
             if (response.status == 200) {
-                return Promise.resolve(jsonResponse);
+                return Promise.resolve(response.data);
             }
             else
-                return Promise.reject(jsonResponse);
+                return Promise.reject(response.data);
         },
     get:
         async (endpoint, data) => {
@@ -37,28 +34,17 @@ const Api = {
                 "lang": 'en_US',
                 "Login": data
             }
-            let response = await fetch(url, {
-                headers: headers,
-                method: 'GET',
-                // body: JSON.stringify(data)
-            })
-
-            let jsonResponse = await response.json(response);
-
-
+            let response = await axios.get(url, { headers })
             if (response.status == 200) {
-                return Promise.resolve(jsonResponse);
+                return Promise.resolve(response.data);
             }
             else
-                return Promise.reject(jsonResponse);
+                return Promise.reject(response.data);
         },
 
     put:
         async (endpoint, data, login) => {
             let url = dev_url + endpoint;
-            console.log("url", url);
-            console.log("data", JSON.stringify(data));
-            console.log("login", login);
             let headers = {
                 "Accept": "application/json",
                 "Authorization": BASIC_AUTH_KEY,
@@ -66,18 +52,17 @@ const Api = {
                 "lang": 'en_US'
             }
             //  delete data.login;
-            let response = await fetch(url, {
-                headers: headers,
-                method: 'put',
-                body: JSON.stringify(data)
-            })
-
-            let jsonResponse = await response.json(response);
+            // let response = await fetch(url, {
+            //     headers: headers,
+            //     method: 'put',
+            //     body: JSON.stringify(data)
+            // })
+            let response = await axios.put(url, JSON.stringify(data), { headers })
             if (response.status == 200) {
-                return Promise.resolve(jsonResponse);
+                return Promise.resolve(response.data);
             }
             else
-                return Promise.reject(jsonResponse);
+                return Promise.reject(response.data);
         },
 }
 

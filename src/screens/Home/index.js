@@ -59,8 +59,7 @@ class Home extends React.Component {
         // console.log("user",this.props.user);
         // console.log("deliverOrder",deliverOrder);
         // console.log("returnOrder",returnOrder);
-        console.log("loading",loading);
-        return (
+         return (
             <LinearGradient colors={['#f2f2f2', '#f2f2f2']} style={styles.container}>
                 <SafeAreaView style={styles.safeAreaTop} />
                 {loading && <View style={{ width: '100%', height: Metrics.vh * 85, backgroundColor: Colors.border, opacity: 0.2, position: 'absolute', alignSelf: 'center', alignItems: 'center', justifyContent: 'center', zIndex: 1 }}>

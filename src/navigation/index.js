@@ -12,7 +12,9 @@ import {
     PersistGate
 } from 'redux-persist/integration/react';
 import Toast from 'react-native-toast-message'
-
+import { LogBox } from 'react-native';
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 // let notif = NotificationsHelper.initializeFCM();
 // console.log("notif", notif);

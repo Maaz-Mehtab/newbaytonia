@@ -27,17 +27,21 @@ function StackNavigator() {
             <Stack.Screen name="Drawer" component={DrawerNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="Home" component={Home} options={{
                 headerShadowVisible: false,
+                
                 headerTitle: (props) => MiddleHeader("Home"),
                 headerLeft: (props) => LeftHeader("Home"),
                 headerRight: (props) => RightHeader("Home"),
             }} />
             <Stack.Screen name="Order" component={Order} options={{
-                headerTitle: (props) => MiddleHeader("Order"),
+                headerBackVisible:false,
+                
+                headerTitle: props => MiddleHeader("Order"),
                 headerLeft: (props) => LeftHeader("Order"),
                 headerRight: (props) => RightHeader("Order"),
             }} />
             <Stack.Screen name="Detail" component={Detail} options={{
                 headerShadowVisible: false,
+                headerBackVisible:false,
                 headerTitle: (props) => MiddleHeader("Detail"),
                 headerLeft: (props) => LeftHeader("Detail"),
                 headerRight: (props) => RightHeader("Detail"),
