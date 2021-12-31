@@ -132,6 +132,10 @@ android {
     ndkVersion rootProject.ext.ndkVersion
 
     compileSdkVersion rootProject.ext.compileSdkVersion
+     dexOptions {
+       javaMaxHeapSize "4g"
+     }
+
 
     defaultConfig {
         applicationId "com.baytonia"
@@ -139,7 +143,12 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        missingDimensionStrategy 'react-native-camera', 'general'
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
     }
+
+  
     splits {
         abi {
             reset()

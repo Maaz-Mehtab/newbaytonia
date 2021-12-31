@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { cos } from 'react-native-reanimated';
 import { BaseURL, BASIC_AUTH_KEY } from '../helpers/config';
 const dev_url = BaseURL
 
