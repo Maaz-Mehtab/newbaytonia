@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Image, TouchableOpacity } from "react-native";
+import { View, Image, TouchableOpacity ,ActivityIndicator, } from "react-native";
 import { Colors, Metrics } from "../../themes";
 import styles from "./styles";
 import LinearGradient from 'react-native-linear-gradient';
@@ -18,9 +18,14 @@ export default (props) => {
 
                 }}
                 onPress={() => props.btnPress()}>
+                    {props.loader ?
+                    <ActivityIndicator color={Colors.white} size="large"/>
+                    :
+                 
                 <Text style={styles.buttonText} type={"heading"}>
                     {props.label}
                 </Text>
+                   }
             </TouchableOpacity>
         </LinearGradient>
     );

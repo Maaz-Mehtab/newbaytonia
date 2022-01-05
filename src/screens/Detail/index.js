@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { View, SafeAreaView, ActivityIndicator, Image, Platform, FlatList, TouchableOpacity, Linking} from 'react-native';
+import React, { useState } from 'react';
+import { View, SafeAreaView, Dimensions, Modal, ActivityIndicator, Image, Platform, FlatList, TouchableOpacity, Linking } from 'react-native';
 
 import { useSelector, useDispatch } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
@@ -11,11 +11,22 @@ import { Images } from "../../themes/Images";
 import styles from './styles';
 import HomeAction from '../../store/action/home';
 import Toast from 'react-native-toast-message';
-import util from '../../helpers/util'
+import util from '../../helpers/util';
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import { RNCamera } from 'react-native-camera';
+import ImagePicker from 'react-native-image-crop-picker';
+import axios from 'axios';
+import { BaseURL, BASIC_AUTH_KEY } from '../../helpers/config';
+const dev_url = BaseURL
+export const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
+
+const Apptheme = "#733646"
 function Detail(props) {
     const dispatch = useDispatch();
     // console.log("props",props.route.params.id);
     const id = props.route.params.id;
+    const [ModalOpen, setModalOpen] = useState(false)
+    const [loader, setLoader] = useState(false)
     const state = useSelector(state => state.HomeReducers.oderDetail)
     const login = useSelector(state => state.AuthReducers.login)
     const { loading, deliverOrder } = useSelector(state => state.HomeReducers)
@@ -91,7 +102,119 @@ function Detail(props) {
             console.log("dialCall", e);
         }
     }
+    const openCamera = () => {
+        ImagePicker.clean();
 
+        setModalOpen(false)
+        ImagePicker.openCamera({
+            width: 200,
+            height: 200,
+            includeBase64: true,
+        }).then(imageDetail => {
+            changeProfileImage(imageDetail);
+
+
+        });
+    }
+    const openGallery = () => {
+        try {
+            ImagePicker.clean();
+            setModalOpen(false)
+            ImagePicker.openPicker({
+                width: 200,
+                height: 200,
+                mediaType: "photo",
+                // cropping: true,
+                includeBase64: true,
+            }).then(imageDetail => {
+                changeProfileImage(imageDetail)
+            });
+        }
+        catch (e) {
+            console.log("openGallery Exception", e)
+        }
+    }
+
+    const changeProfileImage = async (imagedata) => {
+        try {
+            setLoader(true)
+            let url = dev_url + "/upload/picking/image/" + state.id;
+            let headers = {
+                "Accept": "application/json",
+                "Authorization": BASIC_AUTH_KEY,
+                "lang": 'en_US',
+                // "Login": this.props.user.login
+            }
+            let requestBody = JSON.stringify({
+                "image": imagedata.data,
+            })
+            let response = await axios.post(url, requestBody);
+
+            console.log("response", response);
+            util.successMsg("Image upload successfully")
+            setLoader(false)
+        }
+        catch (e) {
+            console.log("Exception Upload Image", e)
+            util.errorMsg("invalid image type")
+            // this.refs.toast.show('invalid image type ', DURATION.LENGTH_SHORT)
+            // this.setState({
+            //     isloader: false
+            // })
+            setLoader(false)
+        }
+    }
+    const imageModal = () => {
+        return (
+            <Modal
+                transparent
+                visible={ModalOpen}
+                style={styles.modal}
+                animationType={"slide"}
+                onRequestClose={() => setModalOpen(!ModalOpen)}>
+                <TouchableOpacity
+                    onPress={() => setModalOpen(!ModalOpen)}
+                    style={styles.modalOverlay}
+                />
+                <View style={styles.modalSection1}>
+                    <View style={styles.modalSection1View}>
+                        <View
+                            style={styles.modalHeader}>
+                            <Text type="heading" style={[styles.modalheaderText, { color: "#fff" }]}>
+                                Select Photo
+                            </Text>
+                        </View>
+
+
+                        <TouchableOpacity
+                            onPress={() => openCamera()}
+                            style={styles.modalButtons}>
+                            <Icons.AntDesign name="delete" color={"#733646"} style={{ fontSize: 24, paddingRight: 25 }} />
+                            <Text type="heading" style={styles.modalButtonText}>
+                                Camera
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => openGallery()}
+                            style={styles.modalButtons}>
+                            <Icons.FontAwesome name="photo" color={"#733646"} style={{ fontSize: 24, paddingRight: 25 }} />
+                            <Text type="heading" style={styles.modalButtonText}>
+                                Gallery
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => setModalOpen(!ModalOpen)}
+                            style={styles.delelteModalButton}>
+                            <Text type="heading" style={styles.deleteText}>
+                                Cancel
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
+
+        )
+    }
     return (
         <LinearGradient colors={['#f2f2f2', '#f2f2f2']} style={styles.container}>
             <SafeAreaView style={styles.container}>
@@ -185,6 +308,14 @@ function Detail(props) {
                     </View>
                 }
 
+                {state?.pickingState == "assigned" &&
+                    <View style={styles.bottomContainer}>
+                        <View style={styles.buttonView}>
+                            <Button loader={loader} btnPress={() => setModalOpen(true)} label={"Upload Image"} />
+                        </View>
+                    </View>
+                }
+
                 {state?.pickingState == "accept" &&
                     <View style={styles.bottomContainer}>
                         <View style={styles.buttonView}>
@@ -194,7 +325,7 @@ function Detail(props) {
                 }
 
 
-
+                {imageModal()}
                 <Toast ref={(ref) => Toast.setRef(ref)} />
 
             </SafeAreaView>
