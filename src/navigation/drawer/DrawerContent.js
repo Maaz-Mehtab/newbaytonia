@@ -10,6 +10,9 @@ import {
     Text,
     TouchableRipple,
 } from 'react-native-paper';
+
+import { arabic, english } from '../../helpers/Language'
+import { StringConstants, updatelan } from '../../helpers/stringConstant';
 import {
     DrawerContentScrollView,
     DrawerItem
@@ -24,6 +27,7 @@ import { CommonActions } from '@react-navigation/native';
 import { Colors, Metrics } from '../../themes';
 import { Switch } from 'react-native-paper';
 import userAction from '../../store/action/user';
+
 function DrawerContent(props) {
     const dispatch = useDispatch();
     const navigation = useNavigation();
@@ -31,11 +35,24 @@ function DrawerContent(props) {
     const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
     const { userdata } = useSelector(state => state.AuthReducers)
  
-   logoutUser = ()=>{
+    logoutUser = ()=>{
         
         dispatch(userAction.logout())
         navigation.navigate('Login', { screen: 'Login' })
     }
+
+    const languageChange = () => {
+        if (isSwitchOn) {
+    
+          updatelan(english);
+    
+        }
+        else {
+          updatelan(arabic);
+        }
+        setIsSwitchOn(!isSwitchOn)
+    }
+       
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <View style={{
@@ -61,7 +78,7 @@ function DrawerContent(props) {
                     style={{ borderBottomColor: Colors.placeholderColor, borderBottomWidth: 1, flexDirection: 'row', paddingHorizontal: 20, justifyContent: 'space-between', alignItems: 'center', height: 50 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                         <FontAwesome name="th-large" size={20} style={{}} color={Colors.text} />
-                        <Text style={{ paddingLeft: 15, fontSize: 16 }}>Dashboard</Text>
+                        <Text style={{ paddingLeft: 15, fontSize: 16 }}>{StringConstants.DrawerDashboardLabel}</Text>
                     </View>
                     <View>
                         <Entypo name="chevron-right" size={20} style={{}} color={Colors.text} />
@@ -79,9 +96,10 @@ function DrawerContent(props) {
 
 
                     {/* <View style={{flexDirection:'row'}}> */}
-                    <Text>Arabic</Text>
-                    <Switch color={Colors.themeColor} value={isSwitchOn} onValueChange={onToggleSwitch} />
-                    <Text>English</Text>
+                  
+                    <Text>{StringConstants.english}</Text>
+                    <Switch color={Colors.themeColor} value={isSwitchOn} onValueChange={languageChange} />
+                    <Text>{StringConstants.arabic}</Text>
                     {/* <Entypo name="chevron-right" size={20} style={{}} color={Colors.text} /> */}
                     {/* </View> */}
                     {/* </View> */}
@@ -92,7 +110,7 @@ function DrawerContent(props) {
                     style={{ borderBottomColor: Colors.placeholderColor, borderBottomWidth: 1, flexDirection: 'row', paddingHorizontal: 20, justifyContent: 'space-between', alignItems: 'center', height: 50 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                         <Entypo name="log-out" size={20} style={{}} color={Colors.text} />
-                        <Text style={{ paddingLeft: 15, fontSize: 16 }}>Logout</Text>
+                        <Text style={{ paddingLeft: 15, fontSize: 16 }}>{StringConstants.LogoutLabel}</Text>
                     </View>
                     <View>
                         {/* <Entypo name="chevron-right" size={20} style={{}} color={Colors.text} /> */}

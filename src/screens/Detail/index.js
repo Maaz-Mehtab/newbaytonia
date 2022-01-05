@@ -20,6 +20,7 @@ import { BaseURL, BASIC_AUTH_KEY } from '../../helpers/config';
 const dev_url = BaseURL
 export const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
+import { StringConstants } from "../../helpers/stringConstant";
 const Apptheme = "#733646"
 function Detail(props) {
     const dispatch = useDispatch();
@@ -225,7 +226,7 @@ function Detail(props) {
                     <View style={styles.ParentTopView}>
                         <View style={styles.mainView}>
                             <View style={styles.partialView}>
-                                <Text style={{ color: Colors.white }} size="xxSmall">Status</Text>
+                                <Text style={{ color: Colors.white }} size="xxSmall">{StringConstants.OrderDetailsPageStatusLabel}</Text>
                             </View>
                             <View style={styles.halfView}>
                                 <Text size="xxxxSmall">{state?.pickingState}</Text>
@@ -236,7 +237,7 @@ function Detail(props) {
                     <View style={styles.ParentTopView}>
                         <View style={styles.mainView}>
                             <View style={styles.partialView}>
-                                <Text style={{ color: Colors.white }} size="xxSmall">Date</Text>
+                                <Text style={{ color: Colors.white }} size="xxSmall">{StringConstants.OrderDate}</Text>
                             </View>
                             <View style={styles.halfView}>
                                 <Text size="xxxxSmall">{state?.assignedDate}</Text>
@@ -253,7 +254,7 @@ function Detail(props) {
                         <Text size={'medium'} style={styles.headerText} type={"heading"}>{"Order Detail"}</Text>
                     </View>
                     <View style={styles.itemView}>
-                        <Text size={'xSmall'}>No of Boxes  : </Text>
+                        <Text size={'xSmall'}>{StringConstants.TotalNumberOfBoxes} </Text>
                         <Text size={'xxxSmall'}> {state?.NumberOfBoxes}</Text>
                     </View>
                     {state?.products != undefined && state?.products.map((val, ind) => {
@@ -270,7 +271,7 @@ function Detail(props) {
                 <View
                     style={styles.boxView}>
                     <View style={styles.boxHeaderView}>
-                        <Text size={'medium'} style={styles.headerText} type={"heading"}>{"Delivery Address"}</Text>
+                        <Text size={'medium'} style={styles.headerText} type={"heading"}>{StringConstants.OrderDeliveryAddressLabel}</Text>
                     </View>
                     <View style={styles.itemView}>
                         <Text style={{ flex: 1, }} size={'xxxSmall'}>{state?.customerDisplayAddress}</Text>
@@ -280,7 +281,7 @@ function Detail(props) {
                 <View
                     style={styles.boxView}>
                     <View style={styles.boxHeaderView}>
-                        <Text size={'medium'} style={styles.headerText} type={"heading"}>{"Customer Detail"}</Text>
+                        <Text size={'medium'} style={styles.headerText} type={"heading"}>{StringConstants.CustomerDetailsTextLabel}</Text>
                     </View>
                     <View style={styles.itemView}>
                         <Text style={{ flex: 1, }} size={'xxxSmall'}>{state?.customerAddress}</Text>

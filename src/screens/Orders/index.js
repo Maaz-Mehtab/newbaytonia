@@ -7,6 +7,7 @@ import Icon from "../../helpers/Icons";
 import { Colors, Metrics } from '../../themes';
 import styles from './styles';
 
+import { StringConstants } from "../../helpers/stringConstant";
 function Order(props) {
 
     const { params } = props?.route;
@@ -21,18 +22,18 @@ function Order(props) {
                     <Text size={'medium'} style={styles.headerText} type={"heading"}>#{item.pickingId}</Text>
                     {type == 1 &&
                         <View style={{ backgroundColor: Colors.white, padding: Metrics.ratio(5), marginHorizontal: Metrics.ratio(10) }}>
-                            <Text style={{ color: Colors.themeColor }}>Return Order</Text>
+                            <Text style={{ color: Colors.themeColor }}>{StringConstants.ReturnOrder}</Text>
                         </View>
                     }
                 </View>
 
 
                 <View style={styles.itemView}>
-                    <Text size={'xSmall'}>Order No : {item?.saleOrderId}</Text>
+                    <Text size={'xSmall'}>{StringConstants.OrderNameLabelPrefix} : {item?.saleOrderId}</Text>
                 </View>
 
                 <View style={styles.itemView}>
-                    <Text size={'xSmall'}>Created Date : {item?.assignedDate}</Text>
+                    <Text size={'xSmall'}>{StringConstants.OrderDatePrefix} : {item?.assignedDate}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -50,7 +51,7 @@ function Order(props) {
             <SafeAreaView style={styles.container}>
 
                 <View style={{ alignItems: 'center', justifyContent: 'center', paddingTop: Metrics.ratio(25) }}>
-                    <Text style={{ fontSize: Metrics.ratio(18), textTransform: 'capitalize', color: Colors.themeColor, fontWeight: "bold" }}> {title} Order</Text>
+                    <Text style={{ fontSize: Metrics.ratio(18), textTransform: 'capitalize', color: Colors.themeColor, fontWeight: "bold" }}>{title}</Text>
                 </View>
 
                 <View style={{ marginTop: 20 }}>

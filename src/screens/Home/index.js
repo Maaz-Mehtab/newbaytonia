@@ -15,19 +15,29 @@ import { BaseURL, BASIC_AUTH_KEY } from '../../helpers/config';
 const dev_url = BaseURL
 export const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 import Toast from 'react-native-toast-message';
-import util from '../../helpers/util'
+import util from '../../helpers/util';
+import { StringConstants } from "../../helpers/stringConstant";
+export var updateLanguage;
 class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             selectedIndex: 0,
             isOnline: true,
-            isOpenQrCode: false
+            isOpenQrCode: false,
+            language:false
 
         }
+        this.updateLanguage =this.updateLanguage.bind(this);
+        
 
     }
 
+    updateLanguage = updateLanguage = () => {
+        this.setState({
+            language:!this.state.language
+        },()=>console.log("StringConstants",StringConstants))
+    }
 
     toggleQrCodeScanner = () => {
         this.setState({
@@ -96,6 +106,7 @@ class Home extends React.Component {
 
     navigationOrder = (param) => {
         let data = [];
+        let title = "";
         if (this.state.selectedIndex == 0) {
             data = this.props.order?.deliverOrder?.deliveryBoyPickings[param]
             data = data.filter(a => a.DeliveryType == "order")
@@ -104,7 +115,8 @@ class Home extends React.Component {
             data = this.props.order?.returnOrder?.deliveryBoyPickings[param]
             data = data.filter(a => a.DeliveryType != "order")
         }
-        this.props.navigation.push("Order", { data: data, title: param, type: this.state.selectedIndex })
+        title = param =="assigned"?StringConstants.AssignedOrders :param =="accept"? StringConstants.AcceptedOrders:StringConstants.CompletedOrders
+        this.props.navigation.push("Order", { data: data, title: title, type: this.state.selectedIndex })
     }
 
     render() {
@@ -125,7 +137,7 @@ class Home extends React.Component {
                                 <Icons.MaterialCommunityIcons name="truck-delivery-outline" color={Colors.white} size={24} />
                                 <Text style={styles.orderText}>{deliverOrder.deliveryBoyPickings?.delivered.length}</Text>
                             </View>
-                            <Text style={styles.orderMainText}>Orders Delivered</Text>
+                            <Text style={styles.orderMainText}>{StringConstants.TotalOrdersDeliveredLabel}</Text>
                         </View>
 
                         <View style={styles.ParentTopView}>
@@ -133,39 +145,39 @@ class Home extends React.Component {
                                 <Icons.MaterialIcons name="assignment-return" color={Colors.white} size={24} />
                                 <Text style={styles.orderText}>{returnOrder?.deliveryBoyPickings?.delivered?.length}</Text>
                             </View>
-                            <Text style={styles.orderMainText}>Orders Returned</Text>
+                            <Text style={styles.orderMainText}>{StringConstants.ReturnOrder}</Text>
                         </View>
                     </View>
 
 
                     <View style={styles.myOrderView}>
-                        <Text style={{ fontSize: Metrics.ratio(20), fontWeight: 'bold', color: Colors.themeColor }}>My Orders</Text>
+                        <Text style={{ fontSize: Metrics.ratio(20), fontWeight: 'bold', color: Colors.themeColor }}>{StringConstants.MyOrders}</Text>
                     </View>
 
 
                     <View style={styles.ListView}>
 
                         <TouchableOpacity activeOpacity={1} onPress={() => this.setSelectedItem(0)} style={this.state.selectedIndex == 0 ? styles.activeListView : styles.inActiveListView}>
-                            <Text style={this.state.selectedIndex == 0 ? styles.activeText : styles.inActiveText}>Delivery ({deliverOrder?.pendingOrder})</Text>
+                            <Text style={this.state.selectedIndex == 0 ? styles.activeText : styles.inActiveText}>{StringConstants.DELIVERY} ({deliverOrder?.pendingOrder})</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity activeOpacity={1} onPress={() => this.setSelectedItem(1)} style={this.state.selectedIndex == 1 ? styles.activeListView : styles.inActiveListView}>
-                            <Text style={this.state.selectedIndex == 1 ? styles.activeText : styles.inActiveText}>Return ({deliverOrder?.pendingReturn})</Text>
+                            <Text style={this.state.selectedIndex == 1 ? styles.activeText : styles.inActiveText}>{StringConstants.RETURN} ({deliverOrder?.pendingReturn})</Text>
                         </TouchableOpacity>
                     </View>
 
                     <View style={{ marginBottom: 20, }}>
                         <TouchableOpacity onPress={() => this.navigationOrder("assigned")} style={styles.listButtonView}>
                             <Icons.AntDesign name="exclamationcircle" color={Colors.themeColor} size={20} />
-                            <Text style={styles.ordersText}>Assigned Orders</Text>
+                            <Text style={styles.ordersText}>{StringConstants.AssignedOrders}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.navigationOrder("accept")} style={styles.listButtonView}>
                             <Icons.AntDesign name="pluscircle" color={Colors.themeColor} size={20} />
-                            <Text style={styles.ordersText}>Accepted Orders</Text>
+                            <Text style={styles.ordersText}>{StringConstants.AcceptedOrders}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.navigationOrder("delivered")} style={styles.listButtonView}>
                             <Icons.AntDesign name="checkcircle" color={Colors.themeColor} size={20} />
-                            <Text style={styles.ordersText}>Complete Orders</Text>
+                            <Text style={styles.ordersText}>{StringConstants.CompletedOrders}</Text>
                         </TouchableOpacity>
                     </View>
 
