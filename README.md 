@@ -1,0 +1,142 @@
+# Project Name : Baytonia Delivery App
+
+Baytonia delivery app is used for delivery boy of our company.
+
+**Functional Specification Document:** [Link to specification document]
+
+## Features:
+
+- Login
+- Dashboard
+- Products Listing
+- Product Detail
+- Account Settings
+
+## Tech Stack:
+
+- React Native
+- React Navigation 5
+- AsyncStorage
+
+## Working Branches
+
+- `master`: always keep this updated with PROD stable release
+- `release/qa`: updated with latest QA build
+- `release/stage`: updated with latest Staging build
+- `release/prod`: updated with latest PROD build
+- `development`: updated with latest code
+
+## Installation:
+
+1. Clone the repository on your local machine.
+2. Go to the project root directory and run `npm install` to install the project dependencies.
+3. Navigate to ios folder inside project and run `pod install`.
+4. To start Metro (JavaScript bundler), run `npx react-native start`.
+
+### Running on Android:
+
+1. Open a new terminal and navigate to project root folder.
+2. Launch Android emulator from Android Studio AVD Manager.
+3. Run `npx react-native run-android`. Alternatively, you can also run it directly from within Android Studio.
+
+### Running on iOS:
+
+1. Open a new terminal and navigate to project root folder.
+2. Run `npx react-native run-ios`. Alternatively, you can also run it directly from within Xcode.
+
+### Hardware/Software Requirements:
+
+1. MacBook (for building iOS app)
+2. Node
+3. Android Studio
+4. Xcode
+5. CocoaPods
+
+## Instructions to create build manually:
+
+For **Android**, run:
+
+```
+react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+```
+
+```
+cd android && ./gradlew assembleDebug
+```
+
+For **iOS**, run:
+
+```
+react-native run-ios --configuration=release
+```
+
+to get the `.app` file in `Build/Products/Release/"<Your_Filename>.app"`. For conversion from `.app` to `.ipa`:
+
+- Create folder `Payload`.
+- Paste `.app` file into `Payload` folder.
+- Compress the `Payload` folder.
+- Change the name you want and put extension as `.ipa`.
+
+## Configurations:
+
+
+#### Android:
+
+- Android Keystore for Appcenter Builds:
+
+  - Location: <location>
+  - Alias: <alias>
+  - Password: <password>
+
+- Upload builds on App Center:
+  - QA: [Link to AppCenter QA App]
+  - Staging: [Link to AppCenter Staging App]
+  - Production: [Link to AppCenter Production App]
+
+#### iOS:
+
+- Provisioning Profile for Appcenter Builds:
+
+  - App name: <app-name>
+  - Team: <team>
+  - Id: <id>
+  - Debug Profile: <debug-profile>
+  - Release Profile: <release-profile>
+
+- Upload builds on App Center:
+  - QA: [Link to AppCenter QA App]
+  - Staging: [Link to AppCenter Staging App]
+  - Production: [Link to AppCenter Production App]
+
+### Fastlane:
+
+| Platform Builds | Path                                                  | Description                                   |
+| --------------- | ----------------------------------------------------- | --------------------------------------------- |
+| APK_PATH        | android/app/build/outputs/apk/release/app-release.apk | Path of Android apk for fastlane build upload |
+| IPA_PATH        | ./builds/Menu.ipa                                     | Path of iOS ipa for fastlane build upload     |
+
+## Suggested Tools:
+
+1. Visual Studio Code
+2. SourceTree
+
+## Team Standards:
+
+Please refer to [Link-to-standards-document]
+
+## CI/CD Status:
+
+Implemented for Android.
+
+## Known Issues:
+
+1. Reanimated library is deprecated & needs to be upgraded or replaced.
+2. React Native must be upgraded.
+
+## Contributers:
+
+- Maaz Mehtab <maazmehtabiddn95@gmail.com>
+
+## License:
+
+(Optional)
