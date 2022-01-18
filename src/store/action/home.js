@@ -8,10 +8,11 @@ export default {
     deliveryOrder: (id) => {
         return async dispatch => {
             let url = Endpoints.Auth.delivery_boy+id+"/dashboard";
-            dispatch({ type: actionTypes.LOADER_ON })
+            // dispatch({ type: actionTypes.LOADER_ON })
             try {
                 let response = await Api.get(Endpoints.Auth.delivery_boy+id+"/dashboard",{})
                 dispatch({ type: actionTypes.FETCH_DELIVER_ORDER, payload: response })
+                dispatch({ type: actionTypes.LOADER_OFF })
                 return Promise.resolve(response)
             } catch (error) {
                 dispatch({ type: actionTypes.LOADER_OFF })
@@ -21,10 +22,11 @@ export default {
     },
     returnOrder: (id) => {
         return async dispatch => {
-            dispatch({ type: actionTypes.LOADER_ON })
+            // dispatch({ type: actionTypes.LOADER_ON })
             try {
                 let response = await Api.get(Endpoints.Auth.delivery_boy+id+"/dashboard?delivery_type=return",{})
                 dispatch({ type: actionTypes.FETCH_RETURN_ORDER, payload: response })
+                dispatch({ type: actionTypes.LOADER_OFF })
                 return Promise.resolve(response)
             } catch (error) {
                 dispatch({ type: actionTypes.LOADER_OFF })
@@ -39,6 +41,7 @@ export default {
             try {
                 let response = await Api.get(Endpoints.Auth.delivery_boy + "pickings/" + id, login)
                 dispatch({ type: actionTypes.FETCH_ORDER_DETAIL, payload: response })
+                dispatch({ type: actionTypes.LOADER_OFF })
                 return Promise.resolve(response)
             } catch (error) {
                 dispatch({ type: actionTypes.LOADER_OFF })

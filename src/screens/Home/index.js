@@ -36,7 +36,7 @@ class Home extends React.Component {
     updateLanguage = updateLanguage = () => {
         this.setState({
             language:!this.state.language
-        },()=>console.log("StringConstants",StringConstants))
+        })
     }
 
     toggleQrCodeScanner = () => {
@@ -120,8 +120,9 @@ class Home extends React.Component {
     }
 
     render() {
-        const { deliverOrder, returnOrder, loading } = this.props.order
-        // console.log("user",this.props.user);
+        const { deliverOrder, returnOrder, loading } = this.props.order;
+        // console.log("loading",loading);
+        // console.log("order",this.props.order);
         // console.log("deliverOrder",deliverOrder);
         // console.log("returnOrder",returnOrder);
         return (

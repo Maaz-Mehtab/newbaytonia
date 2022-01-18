@@ -103,9 +103,10 @@ export default StyleSheet.create({
         textTransform: 'uppercase'
     },
     ordersText: {
-        paddingLeft: 5,
+        paddingLeft: 15,
         fontSize:Metrics.ratio(14),
         paddingTop:Metrics.ratio(2),
+        paddingBottom:5,
     },
     listButtonView: {
         padding: 15,

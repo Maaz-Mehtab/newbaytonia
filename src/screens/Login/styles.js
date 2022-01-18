@@ -21,8 +21,8 @@ export default StyleSheet.create({
 
   logo: {
     resizeMode: "contain",
-    width: Metrics.ratio(300),
-    height: Metrics.ratio(200),
+    width: Metrics.ratio(250),
+    height: Metrics.ratio(170),
   },
   logoText: {
     color: Colors.descriptionColor,

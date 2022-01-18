@@ -260,7 +260,7 @@ function Detail(props) {
                     {state?.products != undefined && state?.products.map((val, ind) => {
                         return (
                             <View key={ind} style={styles.itemView}>
-                                <Text size={'xSmall'}>({ind + 1}) : </Text>
+                                <Text size={'xSmall'}>({ind + 1})  :  </Text>
                                 <Text style={{ flex: 1, }} size={'xxxSmall'}>{val.name}</Text>
                             </View>
                         )

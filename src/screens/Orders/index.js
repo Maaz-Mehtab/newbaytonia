@@ -29,11 +29,11 @@ function Order(props) {
 
 
                 <View style={styles.itemView}>
-                    <Text size={'xSmall'}>{StringConstants.OrderNameLabelPrefix} : {item?.saleOrderId}</Text>
+                    <Text size={'xSmall'}>{StringConstants.OrderNameLabelPrefix} {item?.saleOrderId}</Text>
                 </View>
 
                 <View style={styles.itemView}>
-                    <Text size={'xSmall'}>{StringConstants.OrderDatePrefix} : {item?.assignedDate}</Text>
+                    <Text size={'xSmall'}>{StringConstants.OrderDatePrefix} {item?.assignedDate}</Text>
                 </View>
             </TouchableOpacity>
         )

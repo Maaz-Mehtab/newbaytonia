@@ -16,8 +16,9 @@ import util from '../../helpers/util'
 function Login({ navigation }) {
     const dispatch = useDispatch();
     // const [state, setState] = React.useState({ email: 'db@baytonia.com', password: 'Db123456789!!' })
-    const [state, setState] = React.useState({ email: 'app.dev@baytonia.com', password: 'M123456!' })
-   
+    // const [state, setState] = React.useState({ email: 'app.dev@baytonia.com', password: 'M123456!' })
+    const [state, setState] = React.useState({ email: 'maaz.app@baytonia.com', password: 'M123!' })
+    const [loader,setLoader] = React.useState(false)
     const _handleTextChange = (name, val) => {
         setState({
             ...state,
@@ -34,27 +35,36 @@ function Login({ navigation }) {
     }
 
     const login = async () => {
-        let fcmToken = await fetchFCMToken();
-        let loginrequestObject = {
-            "login": state.email,
-            "pwd": state.password
-        }
-        let loginRequestString = JSON.stringify(loginrequestObject)
-        let loginRequestBase64 = Buffer.Buffer.from(loginRequestString).toString("base64")
-        let requestbody = {
-            "fcmToken": fcmToken,
-            "fcmDeviceId": "DoctorStrange",
-            "login":loginRequestBase64
-        }
-        dispatch(userAction.login(requestbody)).then(res => {
-            if (res?.success) {
-                util.successMsg(res?.message)
-                navigation.navigate("Drawer")
+        try {
+            setLoader(true)
+            let fcmToken = await fetchFCMToken();
+            let loginrequestObject = {
+                "login": state.email,
+                "pwd": state.password
             }
-            else{
-                util.errorMsg(res?.message)
+            let loginRequestString = JSON.stringify(loginrequestObject)
+            let loginRequestBase64 = Buffer.Buffer.from(loginRequestString).toString("base64")
+            let requestbody = {
+                "fcmToken": fcmToken,
+                "fcmDeviceId": "DoctorStrange",
+                "login": loginRequestBase64
             }
-        })
+            dispatch(userAction.login(requestbody)).then(res => {
+                if (res?.success) {
+                    util.successMsg(res?.message)
+                    navigation.navigate("Drawer")
+                    setLoader(false)
+                }
+                else {
+                    util.errorMsg(res?.message)
+                    setLoader(false)
+                }
+            })
+        } catch (e) {
+            setLoader(false)
+            console.log("Exception => login", e);
+
+        }
     }
 
     return (
@@ -102,7 +112,7 @@ function Login({ navigation }) {
 
                 <View style={styles.bottomContainer}>
                     <View style={styles.buttonView}>
-                        <Button btnPress={login} label={"Login"} />
+                        <Button loader={loader} btnPress={login} label={"Login"} />
                     </View>
                 </View>
                 <Toast ref={(ref) => Toast.setRef(ref)} />
