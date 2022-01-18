@@ -13,12 +13,15 @@ import {
 } from 'redux-persist/integration/react';
 import Toast from 'react-native-toast-message'
 import { LogBox } from 'react-native';
+import SplashScreen from 'react-native-splash-screen'
 LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by message
 LogBox.ignoreAllLogs();//Ignore all log notifications
 
 // let notif = NotificationsHelper.initializeFCM();
 // console.log("notif", notif);
 function App() {
+
+    SplashScreen.hide();
     return (
         <Provider store={store}>
             <PersistGate persistor={persistor}>
