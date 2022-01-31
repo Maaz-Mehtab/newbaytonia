@@ -50,13 +50,15 @@ const Api = {
                 "Login": login,
                 "lang": 'en_US'
             }
+            var bodyFormData = new FormData();
+            bodyFormData.append('state', data.state);
             //  delete data.login;
             // let response = await fetch(url, {
             //     headers: headers,
             //     method: 'put',
             //     body: JSON.stringify(data)
             // })
-            let response = await axios.put(url, JSON.stringify(data), { headers })
+            let response = await axios.put(url, bodyFormData, { headers })
             if (response.status == 200) {
                 return Promise.resolve(response.data);
             }

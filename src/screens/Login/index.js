@@ -17,7 +17,8 @@ function Login({ navigation }) {
     const dispatch = useDispatch();
     // const [state, setState] = React.useState({ email: 'db@baytonia.com', password: 'Db123456789!!' })
     // const [state, setState] = React.useState({ email: 'app.dev@baytonia.com', password: 'M123456!' })
-    const [state, setState] = React.useState({ email: 'maaz.app@baytonia.com', password: 'M123!' })
+    // const [state, setState] = React.useState({ email: 'maaz.app@baytonia.com', password: 'M123!' })
+    const [state, setState] = React.useState({ email: '', password: '' })
     const [loader,setLoader] = React.useState(false)
     const _handleTextChange = (name, val) => {
         setState({

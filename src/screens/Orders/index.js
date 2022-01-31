@@ -21,7 +21,7 @@ function Order(props) {
                 <View style={styles.boxHeaderView}>
                     <Text size={'medium'} style={styles.headerText} type={"heading"}>#{item.pickingId}</Text>
                     {type == 1 &&
-                        <View style={{ backgroundColor: Colors.white, padding: Metrics.ratio(5), marginHorizontal: Metrics.ratio(10) }}>
+                        <View style={{ backgroundColor: Colors.white, padding: Metrics.ratio(5), marginHorizontal: Metrics.ratio(10) ,borderRadius:4}}>
                             <Text style={{ color: Colors.themeColor }}>{StringConstants.ReturnOrder}</Text>
                         </View>
                     }

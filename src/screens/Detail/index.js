@@ -42,14 +42,20 @@ function Detail(props) {
 
     const AcceptOrder = async () => {
         const id = state.id;
-        let data = {
-            "state": 'accept',
+       let requestbody = {
+            "state": "accept"
         }
-        await dispatch(HomeAction.acceptOrder(id, data, login))
-        util.successMsg("Order Accepted")
-        setTimeout(() => {
-            props.navigation.replace("Drawer");
-        }, 3000);
+       let res =  await dispatch(HomeAction.acceptOrder(id, requestbody, login))
+      if(res.success){
+         util.successMsg("Order Accepted")
+         setTimeout(() => {
+           props.navigation.replace("Drawer");
+         }, 3000);
+       }
+       else{
+        util.errorMsg(res.message)
+       }
+       
     }
     const DeliverOrder = async () => {
         if (deliverOrder.otpRequired && state.DeliveryType == "order") {
@@ -58,13 +64,17 @@ function Detail(props) {
         else {
             const id = state.id;
             let data = {
-                "state": 'delivered',
+              state: 'delivered',
+            };
+            let res = await dispatch(HomeAction.acceptOrder(id, data, login));
+            if (res.success) {
+              util.successMsg('Order Delivered');
+              setTimeout(() => {
+                props.navigation.replace('Drawer');
+              }, 3000);
+            } else {
+              util.errorMsg(res.message);
             }
-            await dispatch(HomeAction.acceptOrder(id, data, login))
-            util.successMsg("Order Delivered")
-            setTimeout(() => {
-                props.navigation.replace("Drawer");
-            }, 3000);
 
         }
     }
