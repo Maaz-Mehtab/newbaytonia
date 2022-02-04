@@ -84,7 +84,7 @@ class Util {
             text1: "Error",
             text2: desc,
             position: 'bottom',
-            visibilityTime: 3000,
+            visibilityTime: 4000,
             topOffset: 30,
             bottomOffset: 40,
     
@@ -97,7 +97,7 @@ class Util {
             text1: "Congrats",
             text2: desc,
             position: 'bottom',
-            visibilityTime: 3000,
+            visibilityTime: 4000,
             topOffset: 30,
             bottomOffset: 40,
     

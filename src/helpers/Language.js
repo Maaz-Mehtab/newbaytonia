@@ -201,7 +201,7 @@ export var english = {
     AssignedOrders: 'Assigned Orders',
     AcceptedOrders: 'Accepted Orders',
     CompletedOrders: 'Completed Orders',
-    ReturnOrder: "Return Order",
+    ReturnOrder: "Order Return",
     Order: "Order ",
     Return: "Return",
     OrderDate:"Date"
