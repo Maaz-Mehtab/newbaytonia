@@ -79,7 +79,9 @@ class Home extends React.Component {
       let response = await axios.get(url, {headers});
       console.log('barcodeServiceCall response', response);
       if (response.status == 200) {
-        if (response.data.barcode.length > 0) {
+        if (response.data.barcode.length > 0 && response?.data?.barcode[0]?.DeliveryBoyPickingId !="") {
+          let id = response?.data?.barcode[0]?.DeliveryBoyPickingId;
+          this.props.navigation.navigate('Detail', {id: id});
         } else {
           util.errorMsg('there is no record found by this Qr code .');
         }
