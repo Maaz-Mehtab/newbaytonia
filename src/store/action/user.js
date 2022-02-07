@@ -9,8 +9,8 @@ export default {
         return async dispatch => {
             dispatch({ type: actionTypes.LOADER_ON })
             try {
-                let loginsuccess = await Api.post(Endpoints.Auth.login, data, false)
-                loginsuccess.login =data.login
+                let loginsuccess = await Api.post(Endpoints.Auth.login, data, false);
+                loginsuccess.login = loginsuccess.success ? data.login : '';
                 dispatch({ type: actionTypes.LOGIN, payload: loginsuccess })
                 return Promise.resolve(loginsuccess)
             } catch (error) {
