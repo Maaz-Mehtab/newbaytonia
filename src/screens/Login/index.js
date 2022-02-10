@@ -35,6 +35,22 @@ function Login({ navigation }) {
         return fcmToken
     }
 
+   const  loginUserCheck = async ()=>{
+        try {
+
+            if (state.email == '') {
+              util.errorMsg('Enter Email Address');
+              return;
+            } else if (state.password == '') {
+              util.errorMsg('Enter Password');
+              return;
+            }
+            await login();  
+        } catch (error) {
+            console.log("exception",error)
+        }
+    }
+
     const login = async () => {
         try {
             setLoader(true)
@@ -113,7 +129,7 @@ function Login({ navigation }) {
 
                 <View style={styles.bottomContainer}>
                     <View style={styles.buttonView}>
-                        <Button loader={loader} btnPress={login} label={"Login"} />
+                        <Button loader={loader} btnPress={loginUserCheck} label={"Login"} />
                     </View>
                 </View>
                 <Toast ref={(ref) => Toast.setRef(ref)} />
