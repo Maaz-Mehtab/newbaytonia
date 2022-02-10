@@ -157,7 +157,6 @@ class Home extends React.Component {
 
   navigationOrder = param => {
     try {
-      param = param == 'delivered' ? 'invoiced' : param;
       let data = [];
       let title = '';
       if (this.state.selectedIndex == 0) {
