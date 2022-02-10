@@ -52,12 +52,16 @@ const Api = {
             }
             var bodyFormData = new FormData();
             bodyFormData.append('state', data.state);
+            if(data.token){
+                bodyFormData.append('token', data.token);
+            }
             //  delete data.login;
             // let response = await fetch(url, {
             //     headers: headers,
             //     method: 'put',
             //     body: JSON.stringify(data)
             // })
+            console.log("bodyFormData",bodyFormData);
             let response = await axios.put(url, bodyFormData, { headers })
             if (response.status == 200) {
                 return Promise.resolve(response.data);
