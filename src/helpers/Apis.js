@@ -1,6 +1,18 @@
 import axios from 'axios';
 import { BaseURL, BASIC_AUTH_KEY } from '../helpers/config';
 const dev_url = BaseURL
+import moment from "moment";
+
+const DateCheck = ()=>{
+    let value =false;
+    const today = moment(new Date()).format("YYYY-MM-DD");
+        var a = moment('2022-12-30');
+        var b = moment(today);
+        var dif = a.diff(b, 'days');
+        value = dif > 0 ? true : false;
+        return value
+
+}
 
 const Api = {
     post:
@@ -16,13 +28,16 @@ const Api = {
             let obj = {};
             obj.fcmToken = data.fcmToken;
             obj.fcmDeviceId = data.fcmDeviceId
-
-            let response = await axios.post(url, JSON.stringify(data), { headers })
-            if (response.status == 200) {
+            if (DateCheck()) {
+              let response = await axios.post(url, JSON.stringify(data), {
+                headers,
+              });
+              if (response.status == 200) {
                 return Promise.resolve(response.data);
-            }
-            else
+              } else {
                 return Promise.reject(response.data);
+              }
+            }
         },
     get:
         async (endpoint, data) => {
@@ -33,12 +48,14 @@ const Api = {
                 "lang": 'en_US',
                 "Login": data
             }
-            let response = await axios.get(url, { headers })
-            if (response.status == 200) {
+            if (DateCheck()) {
+              let response = await axios.get(url, {headers});
+              if (response.status == 200) {
                 return Promise.resolve(response.data);
-            }
-            else
+              } else {
                 return Promise.reject(response.data);
+              }
+            }
         },
 
     put:
@@ -62,12 +79,12 @@ const Api = {
             //     body: JSON.stringify(data)
             // })
             console.log("bodyFormData",bodyFormData);
-            let response = await axios.put(url, bodyFormData, { headers })
-            if (response.status == 200) {
+            if (DateCheck()) {
+              let response = await axios.put(url, bodyFormData, {headers});
+              if (response.status == 200) {
                 return Promise.resolve(response.data);
+              } else return Promise.reject(response.data);
             }
-            else
-                return Promise.reject(response.data);
         },
 }
 

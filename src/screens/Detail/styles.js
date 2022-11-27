@@ -151,7 +151,7 @@ export default StyleSheet.create({
         borderStyle: "solid",
         flexDirection: 'row',
         borderBottomWidth: 1,
-        backgroundColor: '#733646'
+        backgroundColor:  Colors.themeColor
       },
       modalheaderText: {
         fontSize: 16,

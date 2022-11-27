@@ -5,7 +5,6 @@ setSetting(english)
 export function updatelan(item) {
     try {
         setSetting(item)
-        console.log("item" ,item);
         updateLanguage();
     }
     catch (e) {

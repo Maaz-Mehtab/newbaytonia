@@ -9,20 +9,33 @@ import styles from './styles';
 
 import {StringConstants} from '../../helpers/stringConstant';
 import {ScrollView} from 'react-native-gesture-handler';
+import {useFocusEffect} from '@react-navigation/native';
+import home from '../../store/action/home';
 function Order(props) {
+  const dispatch = useDispatch();
   const {params} = props?.route;
   const {data, title, type} = params;
+
+  useFocusEffect(() => {
+    clearOrderDetail();
+  }, [params]);
+
+  const clearOrderDetail = () => {
+    dispatch(home.resetOrderDetail());
+  };
 
   const renderItem = ({item, index}) => {
     return (
       <TouchableOpacity
         activeOpacity={1}
-        onPress={() => props.navigation.navigate('Detail', {id: item.id})}
+        onPress={() =>
+          props.navigation.navigate('Detail', {id: item?.id, item: item})
+        }
         key={index}
         style={styles.boxView}>
         <View style={styles.boxHeaderView}>
           <Text size={'medium'} style={styles.headerText} type={'heading'}>
-            #{item.pickingId}
+            #{item?.name}
           </Text>
           {type == 1 && (
             <View

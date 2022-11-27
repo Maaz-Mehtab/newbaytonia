@@ -5,6 +5,14 @@ import { actionTypes } from './actionTypes'
 
 export default {
 
+    resetOrderDetail : () =>{
+        return async dispatch => {
+         dispatch({ type: actionTypes.RESET_ORDER_DETAIL })
+        }
+    },
+
+
+
     deliveryOrder: (id) => {
         return async dispatch => {
             let url = Endpoints.Auth.delivery_boy+id+"/dashboard";
