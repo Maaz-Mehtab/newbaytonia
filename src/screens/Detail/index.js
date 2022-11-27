@@ -19,7 +19,6 @@ import Button from '../../components/Button';
 import Text from '../../components/Text';
 import Icons from '../../helpers/Icons';
 import {Colors, Metrics} from '../../themes';
-import {Images} from '../../themes/Images';
 import styles from './styles';
 import HomeAction from '../../store/action/home';
 import Toast from 'react-native-toast-message';
@@ -44,9 +43,12 @@ function Detail(props) {
   const [otpModal, setOtpModal] = useState(false);
   const [otpInput, setOptInput] = useState('');
   const [loader, setLoader] = useState(false);
-  const state = useSelector(state => state.HomeReducers.oderDetail);
-  const login = useSelector(state => state.AuthReducers.login);
-  const {loading, deliverOrder} = useSelector(state => state.HomeReducers);
+  const [images, setImages] = useState([]);
+  const [load, setLoad] = useState(false);
+
+  const state = useSelector(state => state?.HomeReducers?.oderDetail);
+  const login = useSelector(state => state?.AuthReducers?.login);
+  const {loading, deliverOrder} = useSelector(state => state?.HomeReducers);
 
   const orderDetail = async () => {
     // await dispatch()
@@ -129,8 +131,13 @@ function Detail(props) {
       width: 200,
       height: 200,
       includeBase64: true,
+      multiple: true,
     }).then(imageDetail => {
-      changeProfileImage(imageDetail);
+      let temp = images;
+      temp.push(imageDetail);
+      setImages(temp);
+      setLoad(!load);
+      // changeProfileImage(imageDetail);
     });
   };
   const openGallery = () => {
@@ -143,8 +150,17 @@ function Detail(props) {
         mediaType: 'photo',
         // cropping: true,
         includeBase64: true,
+        multiple: true,
       }).then(imageDetail => {
-        changeProfileImage(imageDetail);
+        let temp = images;
+        if (imageDetail.length > 0) {
+          imageDetail.forEach(element => {
+            temp.push(element);
+          });
+        }
+        setImages(temp);
+        setLoad(!load);
+        // changeProfileImage(imageDetail);
       });
     } catch (e) {
       console.log('openGallery Exception', e);
@@ -359,6 +375,39 @@ function Detail(props) {
     );
   };
 
+  const removeImage = index => {
+    let temp = images;
+    temp.splice(index, 1);
+    setImages(temp);
+    setLoad(!load);
+  };
+
+  const saveImages = async () => {
+    try {
+      // setLoader(true);
+      let url = dev_url + '/upload/picking/image/' + state.id;
+      var bodyFormData = new FormData();
+      let temp = images;
+
+      temp.forEach(element => {
+        bodyFormData.append('image', element.data);
+      });
+      let response = await axios.post(url, bodyFormData);
+      if (response?.data?.success) {
+        util.successMsg(response?.data?.message);
+        setLoader(false);
+        setImages([]);
+      } else {
+        util.errorMsg(response?.data?.message);
+        setLoader(false);
+      }
+    } catch (e) {
+      console.log('Exception saveImages', e);
+      util.errorMsg('invalid image type');
+      setLoader(false);
+    }
+  };
+
   return (
     <LinearGradient colors={['#f2f2f2', '#f2f2f2']} style={styles.container}>
       <SafeAreaView style={styles.container}>
@@ -525,11 +574,54 @@ function Detail(props) {
             </View>
           )}
 
-          {state?.pickingState == 'accept' && (
+          <FlatList
+            data={images}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={({item, index, separators}) => (
+              <TouchableOpacity
+                style={{
+                  width: 80,
+                  height: 80,
+                  borderRadius: 40,
+                  marginHorizontal: 5,
+                }}>
+                <Image
+                  resizeMode="cover"
+                  style={{width: 80, height: 80, borderRadius: 40}}
+                  source={{
+                    uri: 'data:image/jpeg;base64,' + item.data,
+                  }}
+                />
+                <TouchableOpacity
+                  onPress={() => removeImage(index)}
+                  style={{position: 'absolute', zIndex: 2, right: -25}}>
+                  <Icons.Entypo
+                    name="cross"
+                    color={Colors.logoutColor}
+                    style={{fontSize: 24, paddingRight: 25}}
+                  />
+                </TouchableOpacity>
+              </TouchableOpacity>
+            )}
+          />
+
+          {images.length > 0 && (
             <View style={styles.bottomContainer}>
               <View style={styles.buttonView}>
                 <Button
                   loader={loader}
+                  btnPress={() => saveImages()}
+                  label={'Save Image'}
+                />
+              </View>
+            </View>
+          )}
+
+          {state?.pickingState == 'accept' && (
+            <View style={styles.bottomContainer}>
+              <View style={styles.buttonView}>
+                <Button
                   btnPress={() => setModalOpen(true)}
                   label={'Upload Image'}
                 />
@@ -547,7 +639,9 @@ function Detail(props) {
               </View>
             </View>
           )}
+          {/* <View style={{flex: 1, flexDirection: 'row'}}> */}
 
+          {/* </View> */}
           {imageModal()}
           {optModal()}
           <Toast ref={ref => Toast.setRef(ref)} />
