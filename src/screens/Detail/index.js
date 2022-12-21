@@ -34,6 +34,8 @@ export const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} =
 
 import {StringConstants} from '../../helpers/stringConstant';
 import {ScrollView} from 'react-native-gesture-handler';
+import UnFilledButton from '../../components/UnFilledButton';
+import ReasonModal from '../../components/ReasonModal';
 function Detail(props) {
   const dispatch = useDispatch();
   // console.log("props",props.route.params.id);
@@ -45,10 +47,13 @@ function Detail(props) {
   const [loader, setLoader] = useState(false);
   const [images, setImages] = useState([]);
   const [load, setLoad] = useState(false);
+  const [resonModal, setResonModal] = useState(false);
 
   const state = useSelector(state => state?.HomeReducers?.oderDetail);
   const login = useSelector(state => state?.AuthReducers?.login);
-  const {loading, deliverOrder} = useSelector(state => state?.HomeReducers);
+  const {loading, deliverOrder, reasonList} = useSelector(
+    state => state?.HomeReducers,
+  );
 
   const orderDetail = async () => {
     // await dispatch()
@@ -408,6 +413,10 @@ function Detail(props) {
     }
   };
 
+  const failedDelivery = () => {
+    setResonModal(!resonModal);
+  };
+
   return (
     <LinearGradient colors={['#f2f2f2', '#f2f2f2']} style={styles.container}>
       <SafeAreaView style={styles.container}>
@@ -639,6 +648,16 @@ function Detail(props) {
               </View>
             </View>
           )}
+          {state?.pickingState == 'accept' && (
+            <View style={styles.bottomContainer}>
+              <View style={styles.buttonView}>
+                <UnFilledButton
+                  btnPress={() => failedDelivery()}
+                  label={'Delivery Failed'}
+                />
+              </View>
+            </View>
+          )}
           {/* <View style={{flex: 1, flexDirection: 'row'}}> */}
 
           {/* </View> */}
@@ -646,6 +665,13 @@ function Detail(props) {
           {optModal()}
           <Toast ref={ref => Toast.setRef(ref)} />
         </ScrollView>
+
+        {/* // reason Modal */}
+        <ReasonModal
+          data={reasonList?.reasons}
+          visible={resonModal}
+          setResonModal={() => setResonModal(!resonModal)}
+        />
       </SafeAreaView>
     </LinearGradient>
   );

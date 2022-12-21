@@ -79,7 +79,10 @@ class Home extends React.Component {
       let response = await axios.get(url, {headers});
       console.log('barcodeServiceCall response', response);
       if (response.status == 200) {
-        if (response.data.barcode.length > 0 && response?.data?.barcode[0]?.DeliveryBoyPickingId !="") {
+        if (
+          response.data.barcode.length > 0 &&
+          response?.data?.barcode[0]?.DeliveryBoyPickingId != ''
+        ) {
           let id = response?.data?.barcode[0]?.DeliveryBoyPickingId;
           this.props.navigation.navigate('Detail', {id: id});
         } else {
@@ -93,9 +96,17 @@ class Home extends React.Component {
     }
   };
 
+  getReasonList = () => {
+    try {
+      let id = this.props.user?.userdata?.deliveryBoyPartnerId;
+      this.props.getReasons(id);
+    } catch (error) {}
+  };
+
   componentDidMount() {
     this.fetchDashboardData();
     this.usetStatusCheck();
+    this.getReasonList();
   }
 
   usetStatusCheck = () => {
@@ -155,7 +166,7 @@ class Home extends React.Component {
     });
   };
 
-  navigationOrder = param => {
+  navigationOrder = (param,type) => {
     try {
       let data = [];
       let title = '';
@@ -177,6 +188,8 @@ class Home extends React.Component {
         title: title,
         type: this.state.selectedIndex,
         param: param,
+        orderType:type
+
       });
     } catch (e) {
       console.log('exception => Home => navigationOrder', e);
@@ -249,12 +262,31 @@ class Home extends React.Component {
                     color={Colors.white}
                     size={24}
                   />
+
+                  
                   <Text style={styles.orderText}>
                     {returnOrder?.deliveryBoyPickings?.delivered?.length}
                   </Text>
                 </View>
                 <Text style={styles.orderMainText}>
                   {StringConstants.ReturnOrder}
+                </Text>
+              </View>
+
+              <View style={styles.ParentTopView}>
+                <View style={styles.ordersView}>
+                  <Icons.MaterialCommunityIcons
+                    name="truck-check-outline"
+                    color={Colors.white}
+                    size={24}
+                  />
+                  <Text style={styles.orderText}>
+                    {/* {deliverOrder.deliveryBoyPickings?.delivered.length} */}
+                    0
+                  </Text>
+                </View>
+                <Text style={styles.orderMainText}>
+                  {StringConstants.VendorPos}
                 </Text>
               </View>
             </View>
@@ -306,11 +338,30 @@ class Home extends React.Component {
                   {StringConstants.RETURN} ({deliverOrder?.pendingReturn})
                 </Text>
               </TouchableOpacity>
+
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => this.setSelectedItem(2)}
+                style={
+                  this.state.selectedIndex == 2
+                    ? styles.activeListView
+                    : styles.inActiveListView
+                }>
+                <Text
+                  style={
+                    this.state.selectedIndex == 2
+                      ? styles.activeText
+                      : styles.inActiveText
+                  }>
+                  {/* {StringConstants.DELIVERY} ({deliverOrder?.pendingOrder}) */}
+                  {StringConstants.RECEIVING} (0)
+                </Text>
+              </TouchableOpacity>
             </View>
 
             <View style={{marginBottom: 20}}>
               <TouchableOpacity
-                onPress={() => this.navigationOrder('assigned')}
+                onPress={() => this.navigationOrder('assigned', 0)}
                 style={styles.listButtonView}>
                 <Icons.AntDesign
                   name="exclamationcircle"
@@ -322,7 +373,7 @@ class Home extends React.Component {
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => this.navigationOrder('accept')}
+                onPress={() => this.navigationOrder('accept', 1)}
                 style={styles.listButtonView}>
                 <Icons.AntDesign
                   name="pluscircle"
@@ -334,7 +385,7 @@ class Home extends React.Component {
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={() => this.navigationOrder('delivered')}
+                onPress={() => this.navigationOrder('delivered', 2)}
                 style={styles.listButtonView}>
                 <Icons.AntDesign
                   name="checkcircle"
@@ -391,7 +442,7 @@ class Home extends React.Component {
                 style={{
                   width: '100%',
                   height: 50,
-                  backgroundColor: '#733646',
+                  backgroundColor: Colors.themeColor,
                   flexDirection: 'row',
                   justifyContent: 'flex-start',
                   alignItems: 'center',
@@ -440,6 +491,7 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchDeliveryOrders: id => dispatch(HomeAction.deliveryOrder(id)),
     fetchReturnOrders: id => dispatch(HomeAction.returnOrder(id)),
+    getReasons: id => dispatch(HomeAction.getReasonsList(id)),
   };
 };
 

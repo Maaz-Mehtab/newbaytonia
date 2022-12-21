@@ -42,6 +42,20 @@ export default {
             }
         }
     },
+    getReasonsList: (id) => {
+        return async dispatch => {
+            // dispatch({ type: actionTypes.LOADER_ON })
+            try {
+                let response = await Api.get(Endpoints.Auth.delivery_boy+"/get_reasons",{})
+                dispatch({ type: actionTypes.FETCH_REASON_LIST, payload: response })
+                dispatch({ type: actionTypes.LOADER_OFF })
+                return Promise.resolve(response)
+            } catch (error) {
+                dispatch({ type: actionTypes.LOADER_OFF })
+                return Promise.reject(error)
+            }
+        }
+    },
    
     orderDetail: (id,login) => {
         return async dispatch => {

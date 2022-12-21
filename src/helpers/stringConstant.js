@@ -118,7 +118,10 @@ function setSetting(item) {
             Order:item.Order,
             ReturnOrder:item.ReturnOrder,
             Return:item.Return,
-            OrderDate:item.OrderDate
+            OrderDate:item.OrderDate,
+
+            VendorPos: item.VendorPos,
+            RECEIVING: item.RECEIVING,
         }
     } catch (e) {
         console.log("Exception", e)

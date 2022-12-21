@@ -100,7 +100,9 @@ export var arabic =
     ReturnOrder: "مرتجع",
     Order: ' طلب',
     Return: "ترجيع",
-    OrderDate:"تاريخ"
+    OrderDate:"تاريخ",
+    VendorPos: "Vendor POs",
+    RECEIVING:"RECEIVING"
 }
 
 export var english = {
@@ -204,6 +206,8 @@ export var english = {
     ReturnOrder: "Order Return",
     Order: "Order ",
     Return: "Return",
-    OrderDate:"Date"
+    OrderDate:"Date",
+    VendorPos: "Vendor POs",
+    RECEIVING:"RECEIVING"
 
 }
