@@ -131,7 +131,10 @@ function Login({ navigation }) {
                     <View style={styles.buttonView}>
                         <Button loader={loader} btnPress={loginUserCheck} label={"Login"} />
                     </View>
-                </View>
+                    <TouchableOpacity onPress={()=>navigation.navigate("Signup")} style={styles.buttonView}>
+                        <Text style={styles.registerText}>Register a New User</Text>
+                    </TouchableOpacity>
+                </View>         
                 <Toast ref={(ref) => Toast.setRef(ref)} />
             </SafeAreaView>
         </LinearGradient>

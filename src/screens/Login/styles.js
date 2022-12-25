@@ -45,6 +45,10 @@ export default StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  registerText:{
+    color:Colors.black,
+    fontSize:Metrics.ratio(16),
+  },
   iconStyle: {
     fontSize: Metrics.ratio(20),
     color: Colors.themeColor,
