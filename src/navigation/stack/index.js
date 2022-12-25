@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Login from '../../screens/Login';
+import Signup from '../../screens/Signup';
 import Order from '../../screens/Orders';
 import DrawerNavigator from '../drawer'
 import MiddleHeader from '../header/MiddleHeader';
@@ -24,6 +25,7 @@ function StackNavigator() {
     return (
         <Stack.Navigator initialRouteName={login == "" ? "Login" : "Drawer"} options={{ headerShown: false }} >
             <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+            <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
             <Stack.Screen name="Drawer" component={DrawerNavigator} options={{ headerShown: false }} />
             <Stack.Screen name="Home" component={Home} options={{
                 headerShadowVisible: false,
