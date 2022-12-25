@@ -98,8 +98,9 @@ class Home extends React.Component {
 
   getReasonList = () => {
     try {
+      const login = this.props.user.login;
       let id = this.props.user?.userdata?.deliveryBoyPartnerId;
-      this.props.getReasons(id);
+      this.props.getReasons(id,login);
     } catch (error) {}
   };
 
@@ -491,7 +492,7 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchDeliveryOrders: id => dispatch(HomeAction.deliveryOrder(id)),
     fetchReturnOrders: id => dispatch(HomeAction.returnOrder(id)),
-    getReasons: id => dispatch(HomeAction.getReasonsList(id)),
+    getReasons: (id,login) => dispatch(HomeAction.getReasonsList(id,login)),
   };
 };
 
