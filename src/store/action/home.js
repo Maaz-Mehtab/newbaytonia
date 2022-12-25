@@ -42,11 +42,14 @@ export default {
             }
         }
     },
-    getReasonsList: (id) => {
+    getReasonsList: (id,login) => {
         return async dispatch => {
             // dispatch({ type: actionTypes.LOADER_ON })
             try {
-                let response = await Api.get(Endpoints.Auth.delivery_boy+"/get_reasons",{})
+                let response = await Api.get(
+                  Endpoints.Auth.delivery_boy + 'get_reasons',
+                  login,
+                );
                 dispatch({ type: actionTypes.FETCH_REASON_LIST, payload: response })
                 dispatch({ type: actionTypes.LOADER_OFF })
                 return Promise.resolve(response)
