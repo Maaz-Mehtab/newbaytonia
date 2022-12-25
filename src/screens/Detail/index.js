@@ -417,6 +417,28 @@ function Detail(props) {
     setResonModal(!resonModal);
   };
 
+  const saveReason = async selectedIndex => {
+    try {
+      let bodyFormData = new FormData();
+      let deleveryfailedId =
+        reasonList?.reasons.length > 0 && reasonList?.reasons[selectedIndex].id;
+      bodyFormData.append('reason_id', deleveryfailedId);
+      const pickingId = orderItem.pickingId;
+      let res = await dispatch(
+        HomeAction.saveReasonDelivery(pickingId, bodyFormData),
+      );
+      if (res.success) {
+        util.successMsg(res?.message);
+        setTimeout(() => {
+          props.navigation.replace('Drawer');
+        }, 3000);
+      } else {
+        util.errorMsg(res?.message);
+      }
+      setResonModal(false);
+    } catch (error) {}
+  };
+
   return (
     <LinearGradient colors={['#f2f2f2', '#f2f2f2']} style={styles.container}>
       <SafeAreaView style={styles.container}>
@@ -670,6 +692,7 @@ function Detail(props) {
         <ReasonModal
           data={reasonList?.reasons}
           visible={resonModal}
+          saveReason={saveReason}
           setResonModal={() => setResonModal(!resonModal)}
         />
       </SafeAreaView>

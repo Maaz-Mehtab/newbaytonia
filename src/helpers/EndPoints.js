@@ -4,7 +4,8 @@ module.exports = {
         signup: 'page=signup',
         logout: 'page=logout',
         country_list: 'page=countries_list',
-        delivery_boy:'/deliveryBoy/'
-      
+        delivery_boy:'/deliveryBoy/',
+        set_reason:'/deliveryBoy/set_reason/',
+       
     },
 }

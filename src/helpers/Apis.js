@@ -72,18 +72,32 @@ const Api = {
             if(data.token){
                 bodyFormData.append('token', data.token);
             }
-            //  delete data.login;
-            // let response = await fetch(url, {
-            //     headers: headers,
-            //     method: 'put',
-            //     body: JSON.stringify(data)
-            // })
             console.log("bodyFormData",bodyFormData);
             if (DateCheck()) {
               let response = await axios.put(url, bodyFormData, {headers});
               if (response.status == 200) {
                 return Promise.resolve(response.data);
               } else return Promise.reject(response.data);
+            }
+        },
+        apiPost:
+        async (endpoint, formData,) => {
+            let url = dev_url + endpoint;
+            let headers = {
+                "Accept": "application/json",
+                "Authorization": BASIC_AUTH_KEY,
+                // "Login": data.login,
+                "lang": 'en_US'
+            }
+            if (DateCheck()) {
+              let response = await axios.post(url, formData, {
+                headers,
+              });
+              if (response.status == 200) {
+                return Promise.resolve(response.data);
+              } else {
+                return Promise.reject(response.data);
+              }
             }
         },
 }

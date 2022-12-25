@@ -49,7 +49,7 @@ const ReasonModal = props => {
             <View style={styles.buttonView}>
               <Button
                 disabled={seletedIndex >= 0}
-                btnPress={() => props.setResonModal()}
+                btnPress={() => props.saveReason(seletedIndex)}
                 label={'Submit'}
               />
             </View>

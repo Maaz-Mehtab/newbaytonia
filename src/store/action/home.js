@@ -88,5 +88,22 @@ export default {
             }
         }
     },
+
+    
+    saveReasonDelivery : (orderId,formData)=>{
+        return async dispatch => {
+            dispatch({ type: actionTypes.LOADER_ON })
+            try {
+                let response = await Api.apiPost(Endpoints.Auth.set_reason+orderId, formData, false);
+                // loginsuccess.login = loginsuccess.success ? data.login : '';
+                dispatch({ type: actionTypes.DELEVIERY_FAILED_POST, payload: response })
+                return Promise.resolve(response)
+            } catch (error) {
+                dispatch({ type: actionTypes.LOADER_OFF })
+                return Promise.reject(error)
+            }
+        }
+
+    }
    
 }
