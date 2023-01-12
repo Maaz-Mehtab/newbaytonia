@@ -102,7 +102,28 @@ export var arabic =
     Return: "ترجيع",
     OrderDate:"تاريخ",
     VendorPos: "Vendor POs",
-    RECEIVING:"RECEIVING"
+    RECEIVING:"RECEIVING",
+
+
+
+    JoinToBaytonia:'انضم لفريق التوصيل في بيتونيا',
+    Name:"الاسم الكامل",
+    PhoneNo:"رقم الجوال",
+    Email:"الايميل",
+    Password:"كلمة السر",
+    Male:"ذكر",
+    Female:"أنثى",
+    Age:"العمر",
+    ReferralId:"رقم بطاقة، رخصة",
+    AssemblyTechinician:"فني تركيب",
+    Driver:"سائق توصيل",
+    VehicleDetail:"نوع السيارة (سيارة صغيرة، فان، شاحنة نقل)",
+    SubmitYourRequest:'أرسل طلبي',
+    BackToLogin:"العودة لصفحة تسجيل الدخول",
+    ThanksForRegisteration:"تم التسجيل بنجاح!",
+    WeWillBack:"سيتم مراجعة طلبك والتواصل معك في حال تحقيق شروط القبول",
+    City:"مدينة"
+
 }
 
 export var english = {
@@ -208,6 +229,31 @@ export var english = {
     Return: "Return",
     OrderDate:"Date",
     VendorPos: "Vendor POs",
-    RECEIVING:"RECEIVING"
+    RECEIVING:"RECEIVING",
+
+
+    JoinToBaytonia:'Join To Baytonia Delivery Team',
+    Name:"Name",
+    PhoneNo:"Phone Number",
+    Email:"Email",
+    Password:"Password",
+    Male:"Male",
+    Female:"Female",
+    Age:"Age",
+    ReferralId:"Referral ID",
+    AssemblyTechinician:"Assemble Technician",
+    Driver:"Driver",
+    VehicleDetail:"Vehicle Details",
+    SubmitYourRequest:'Submit Your Request',
+    BackToLogin:"Back to Login",
+    ThanksForRegisteration:"Thanks for registration.",
+    WeWillBack:"we will back to you once your application reviewed and approved",
+    City:"City"
+
+
+
+
+
+
 
 }

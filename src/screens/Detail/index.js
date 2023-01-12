@@ -389,14 +389,15 @@ function Detail(props) {
 
   const saveImages = async () => {
     try {
-      // setLoader(true);
       let url = dev_url + '/upload/picking/image/' + state.id;
       var bodyFormData = new FormData();
       let temp = images;
-
+      let val = [];
       temp.forEach(element => {
-        bodyFormData.append('image', element.data);
+          val.push(element.data);
       });
+      bodyFormData.append('images',JSON.stringify(val));
+     
       let response = await axios.post(url, bodyFormData);
       if (response?.data?.success) {
         util.successMsg(response?.data?.message);
@@ -420,10 +421,13 @@ function Detail(props) {
   const saveReason = async selectedIndex => {
     try {
       let bodyFormData = new FormData();
-      let deleveryfailedId =
+      let deliveryFailedId =
         reasonList?.reasons.length > 0 && reasonList?.reasons[selectedIndex].id;
-      bodyFormData.append('reason_id', deleveryfailedId);
+      bodyFormData.append('reason_id', deliveryFailedId);
       const pickingId = orderItem.pickingId;
+      let body = {
+        reason_id: deliveryFailedId,
+      };
       let res = await dispatch(
         HomeAction.saveReasonDelivery(pickingId, bodyFormData),
       );
