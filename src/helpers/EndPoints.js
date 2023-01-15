@@ -6,6 +6,7 @@ module.exports = {
     country_list: 'page=countries_list',
     delivery_boy: '/deliveryBoy/',
     set_reason: '/deliveryBoy/set_reason/',
-    register : '/deliveryBoy/registration/detail'
+    register : '/deliveryBoy/registration/detail',
+    delivery_boyTypes:'/deliveryBoy/get_db_type'
   },
 };

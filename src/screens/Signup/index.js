@@ -27,9 +27,6 @@ import Api from '../../helpers/Apis';
 import EndPoints from '../../helpers/EndPoints';
 function Signup({navigation}) {
   const dispatch = useDispatch();
-  // const [state, setState] = React.useState({ email: 'db@baytonia.com', password: 'Db123456789!!' })
-  // const [state, setState] = React.useState({ email: 'app.dev@baytonia.com', password: 'M123456!' })
-  // const [state, setState] = React.useState({ email: 'maaz.app@baytonia.com', password: 'M123!' })
   const [state, setState] = React.useState({
     email: '',
     password: '',
@@ -43,6 +40,7 @@ function Signup({navigation}) {
   });
   const [selectedValue, setSelectedValue] = React.useState('');
   const [selectedCity, setSelectedCity] = React.useState('');
+  const [deliveryBoyTypeDdl, setDeliveryBoyTypeDdl] = React.useState([]);
   const [loader, setLoader] = React.useState(false);
   const _handleTextChange = (name, val) => {
     setState({
@@ -53,10 +51,18 @@ function Signup({navigation}) {
 
   SplashScreen.hide();
 
-  const fetchFCMToken = async () => {
-    const fcmToken = await messaging().getToken();
-    return fcmToken;
+  React.useEffect(() => {
+    getDeliveryBoyType();
+  }, []);
+
+  const getDeliveryBoyType = async () => {
+    setDeliveryBoyTypeDdl([]);
+    let response = await Api.get(EndPoints.Auth.delivery_boyTypes, {});
+    if (response?.success) {
+      setDeliveryBoyTypeDdl(response?.db_types);
+    }
   };
+
   const _validation = () => {
     const {email, name, phone, gender, age, referralId, password, vehicle} =
       state;
@@ -103,16 +109,17 @@ function Signup({navigation}) {
           city: selectedCity,
           db_type_id: selectedValue,
           password: state?.password,
-          vehicle_details: selectedValue == '2' ? state?.vehicle : '',
           internal_reference: state?.referralId,
         },
       };
-      // console.log('payload', JSON.stringfy(payload));
-      this.onRegisterApiCall(payload);
+      if (selectedValue == '2') {
+        payload.params.vehicle_details = state?.vehicle;
+      }
+      onRegisterApiCall(payload);
     }
   };
 
-  onRegisterApiCall = async payload => {
+  const onRegisterApiCall = async payload => {
     let response = await Api.apiPost(EndPoints.Auth.register, payload);
     if (response?.result?.success) {
       util.successMsg(response?.result?.success);
@@ -213,80 +220,6 @@ function Signup({navigation}) {
               passowrdhide={true}
             />
 
-            {/* <View style={styles.rowView}>
-              <View style={styles.genderRow}>
-                <View style={styles.iconsRound}>
-                  <Icon.MaterialCommunityIcons
-                    name="gender-male-female"
-                    style={styles.iconStyle}
-                  />
-                </View>
-                <View style={styles.genderView}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      setState({
-                        ...state,
-                        gender: false,
-                      })
-                    }
-                    style={styles.genderBtnContainer}>
-                    <Text style={styles.genderText}>{StringConstants.Male}</Text>
-                    {state.gender ? (
-                      <Icon.FontAwesome
-                        name="circle-o"
-                        style={styles.iconStyle}
-                      />
-                    ) : (
-                      <Icon.FontAwesome
-                        name="check-circle-o"
-                        style={styles.iconStyle}
-                      />
-                    )}
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    onPress={() =>
-                      setState({
-                        ...state,
-                        gender: true,
-                      })
-                    }
-                    style={styles.genderBtnContainer}>
-                    <Text style={styles.genderText}>{StringConstants.Female} </Text>
-                    {!state.gender ? (
-                      <Icon.FontAwesome
-                        name="circle-o"
-                        style={styles.iconStyle}
-                      />
-                    ) : (
-                      <Icon.FontAwesome
-                        name="check-circle-o"
-                        style={styles.iconStyle}
-                      />
-                    )}
-                  </TouchableOpacity>
-                </View>
-              </View>
-
-              <View style={{flex: 1}}>
-                <MainTextInput
-                  Icon={
-                    <Icon.MaterialCommunityIcons
-                      name="view-agenda"
-                      style={styles.iconStyle}
-                    />
-                  }
-                  secureTextEntry={true}
-                  onChangeText={t => _handleTextChange('age', t)}
-                  value={state.age}
-                  label={StringConstants.Age}
-                  // placeholder="**********"
-                  autoCapitalize={'none'}
-                  keyboardType="number-pad"
-                />
-              </View>
-            </View> */}
-
             <MainTextInput
               Icon={
                 <Icon.FontAwesome5
@@ -337,11 +270,14 @@ function Signup({navigation}) {
                     setSelectedValue(itemValue)
                   }>
                   <Picker.Item label="Please select option" value="" />
-                  <Picker.Item
+                  {deliveryBoyTypeDdl?.map((val, ind) => (
+                    <Picker.Item key={ind} label={val.name} value={val.id} />
+                  ))}
+                  {/* <Picker.Item
                     label={StringConstants.AssemblyTechinician}
                     value="1"
                   />
-                  <Picker.Item label={StringConstants.Driver} value="2" />
+                  <Picker.Item label={StringConstants.Driver} value="2" /> */}
                 </Picker>
               </View>
             </View>
