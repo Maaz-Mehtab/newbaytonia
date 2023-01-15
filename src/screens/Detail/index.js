@@ -389,6 +389,7 @@ function Detail(props) {
 
   const saveImages = async () => {
     try {
+      setLoader(true)
       let url = dev_url + '/upload/picking/image/' + state.id;
       var bodyFormData = new FormData();
       let temp = images;
@@ -453,14 +454,33 @@ function Detail(props) {
                 width: '100%',
                 height: Metrics.vh * 85,
                 backgroundColor: Colors.border,
-                opacity: 0.2,
+                opacity: 0.7,
                 position: 'absolute',
                 alignSelf: 'center',
                 alignItems: 'center',
                 justifyContent: 'center',
                 zIndex: 1,
               }}>
-              <ActivityIndicator color={Colors.themeColor} size="large" />
+              <ActivityIndicator color={Colors.black} size="large" />
+            </View>
+          )}
+          {loader && (
+            <View
+              style={{
+                width: '100%',
+                height: Metrics.vh * 85,
+                backgroundColor: Colors.border,
+                opacity: 0.7,
+                position: 'absolute',
+                alignSelf: 'center',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 1,
+              }}>
+              <View style={{zIndex: 2, position: 'absolute'}}>
+                <ActivityIndicator color={Colors.black} size="large" />
+                <Text>Image Uploaing </Text>
+              </View>
             </View>
           )}
           <View style={styles.mainTopView}>

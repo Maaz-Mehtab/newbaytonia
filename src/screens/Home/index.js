@@ -235,7 +235,7 @@ class Home extends React.Component {
                 justifyContent: 'center',
                 zIndex: 1,
               }}>
-              <ActivityIndicator color={Colors.themeColor} size="large" />
+              <ActivityIndicator color={Colors.black} size="large" />
             </View>
           )}
           <ScrollView>
