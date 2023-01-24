@@ -112,7 +112,7 @@ function Signup({navigation}) {
           internal_reference: state?.referralId,
         },
       };
-      if (selectedValue == '2') {
+      if (selectedValue == '1') {
         payload.params.vehicle_details = state?.vehicle;
       }
       onRegisterApiCall(payload);
@@ -273,16 +273,12 @@ function Signup({navigation}) {
                   {deliveryBoyTypeDdl?.map((val, ind) => (
                     <Picker.Item key={ind} label={val.name} value={val.id} />
                   ))}
-                  {/* <Picker.Item
-                    label={StringConstants.AssemblyTechinician}
-                    value="1"
-                  />
-                  <Picker.Item label={StringConstants.Driver} value="2" /> */}
+                  
                 </Picker>
               </View>
             </View>
 
-            {selectedValue == '2' && (
+            {selectedValue == '1' && (
               <MainTextInput
                 Icon={
                   <Icon.FontAwesome5 name="car-side" style={styles.iconStyle} />

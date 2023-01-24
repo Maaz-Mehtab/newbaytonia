@@ -418,14 +418,14 @@ function Detail(props) {
   const failedDelivery = () => {
     setResonModal(!resonModal);
   };
-
   const saveReason = async selectedIndex => {
     try {
       let bodyFormData = new FormData();
       let deliveryFailedId =
         reasonList?.reasons.length > 0 && reasonList?.reasons[selectedIndex].id;
       bodyFormData.append('reason_id', deliveryFailedId);
-      const pickingId = orderItem.pickingId;
+      const pickingId = orderItem?.id;
+      
       let body = {
         reason_id: deliveryFailedId,
       };

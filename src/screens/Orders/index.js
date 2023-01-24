@@ -12,6 +12,8 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {useFocusEffect} from '@react-navigation/native';
 import home from '../../store/action/home';
 import Icons from '../../helpers/Icons';
+import HomeAction from '../../store/action/home';
+import util from '../../helpers/util';
 function Order(props) {
   const dispatch = useDispatch();
 
@@ -20,6 +22,7 @@ function Order(props) {
   const [selectedCheck, setSelectedCheck] = useState([]);
   const [flag, setFlag] = useState(false);
   const [checkBox, setCheckBox] = useState(orderType === 0 ? true : false);
+  const login = useSelector(state => state?.AuthReducers?.login);
   useFocusEffect(() => {
     clearOrderDetail();
   }, [params]);
@@ -122,6 +125,22 @@ function Order(props) {
       </View>
     );
   };
+
+  const acceptOrders = async () => {
+    var bodyFormData = new FormData();
+    bodyFormData.append('db_picking_ids', JSON.stringify(selectedCheck));
+    bodyFormData.append('state', 'accept');
+
+    let res = await dispatch(HomeAction.acceptMultiOrder(bodyFormData, login));
+    if (res?.success) {
+      util.successMsg(res?.message);
+      setTimeout(() => {
+        props.navigation.replace('Drawer');
+      }, 2000);
+    } else {
+      util.errorMsg(res.message);
+    }
+  };
   return (
     <LinearGradient colors={['#f2f2f2', '#f2f2f2']} style={styles.container}>
       <SafeAreaView style={styles.container}>
@@ -142,59 +161,10 @@ function Order(props) {
             {title}
           </Text>
         </View>
-        {/* {checkBox && (
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginTop: 10,
-              justifyContent: 'space-between',
-              marginHorizontal: 20,
-              marginBottom: 10,
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <TouchableOpacity
-                style={styles.acceptOrderBtn}
-                activeOpacity={1}
-                onPress={selectAll}>
-                <Text style={styles.selectAllBtnText}>Accept Orders</Text>
-                <Text
-                  style={
-                    styles.compareText
-                  }>{`${selectedCheck.length} /${data.length}`}</Text>
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <TouchableOpacity
-                style={styles.selectAllBtnView}
-                activeOpacity={1}
-                onPress={selectAll}>
-                <Text style={styles.selectAllBtnText}>Select All</Text>
-              </TouchableOpacity>
-              <Icons.MaterialCommunityIcons
-                name={
-                  selectedCheck.length == data.length
-                    ? 'checkbox-outline'
-                    : 'checkbox-blank-outline'
-                }
-                color={Colors.themeColor}
-                size={24}
-              />
-            </View>
-          </View>
-        )} */}
 
-        <ScrollView showsVerticalScrollIndicator={false} style={{marginBottom: checkBox ? 80 : 0}}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{marginBottom: checkBox ? 80 : 0}}>
           <View style={{marginTop: 0}}>
             <View style={{paddingBottom: 10}}>
               <FlatList
@@ -225,7 +195,9 @@ function Order(props) {
                 />
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.acceptOrderBtn}>
+              <TouchableOpacity
+                onPress={acceptOrders}
+                style={styles.acceptOrderBtn}>
                 <Text style={styles.acceptOrderBtnText}>Accept Orders</Text>
                 <Text
                   style={

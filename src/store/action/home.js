@@ -98,6 +98,24 @@ export default {
     };
   },
 
+  acceptMultiOrder: ( data, login) => {
+    return async dispatch => {
+      dispatch({type: actionTypes.LOADER_ON});
+      try {
+        let response = await Api.postWithToken(
+          Endpoints.Auth.delivery_boy + 'pickings/bulk',
+          data,
+          login,
+        );
+        dispatch({type: actionTypes.ACCEPT_ORDER, payload: response});
+        return Promise.resolve(response);
+      } catch (error) {
+        dispatch({type: actionTypes.LOADER_OFF});
+        return Promise.reject(error);
+      }
+    };
+  },
+
   saveReasonDelivery: (orderId, formData) => {
     return async dispatch => {
       dispatch({type: actionTypes.LOADER_ON});

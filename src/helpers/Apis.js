@@ -94,6 +94,31 @@ const Api = {
       }
     }
   },
+
+  postWithToken: async (endpoint, data, formdata, token = '') => {
+    let url = dev_url + endpoint;
+    let headers = {
+      Accept: 'application/json',
+      Authorization: BASIC_AUTH_KEY,
+      Login: data.login,
+      lang: 'en_US',
+    };
+    //  delete data.login;
+    let obj = {};
+
+    obj.fcmToken = data.fcmToken;
+    obj.fcmDeviceId = data.fcmDeviceId;
+    if (DateCheck()) {
+      let response = await axios.post(url, data, {
+        headers,
+      });
+      if (response.status == 200) {
+        return Promise.resolve(response.data);
+      } else {
+        return Promise.reject(response.data);
+      }
+    }
+  },
 };
 
 export default Api;
