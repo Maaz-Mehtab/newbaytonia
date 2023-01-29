@@ -100,7 +100,7 @@ class Home extends React.Component {
     try {
       const login = this.props.user.login;
       let id = this.props.user?.userdata?.deliveryBoyPartnerId;
-      this.props.getReasons(id,login);
+      this.props.getReasons(id, login);
     } catch (error) {}
   };
 
@@ -121,6 +121,7 @@ class Home extends React.Component {
     let id = this.props.user?.userdata?.deliveryBoyPartnerId;
     this.props.fetchDeliveryOrders(id);
     this.props.fetchReturnOrders(id);
+    this.props.fetchReceivingOrder(id);
   };
 
   setOnline = async () => {
@@ -167,15 +168,18 @@ class Home extends React.Component {
     });
   };
 
-  navigationOrder = (param,type) => {
+  navigationOrder = (param, type) => {
     try {
       let data = [];
       let title = '';
       if (this.state.selectedIndex == 0) {
         data = this.props.order?.deliverOrder?.deliveryBoyPickings[param];
         data = data.filter(a => a.DeliveryType == 'order');
+      } else if (this.state.selectedIndex == 1) {
+        data = this.props.order?.returnOrder?.Return[param];
+        data = data.filter(a => a.DeliveryType != 'order');
       } else {
-        data = this.props.order?.returnOrder?.deliveryBoyPickings[param];
+        data = this.props.order?.receivedOrder?.Receiving[param];
         data = data.filter(a => a.DeliveryType != 'order');
       }
       title =
@@ -189,8 +193,7 @@ class Home extends React.Component {
         title: title,
         type: this.state.selectedIndex,
         param: param,
-        orderType:type
-
+        orderType: type,
       });
     } catch (e) {
       console.log('exception => Home => navigationOrder', e);
@@ -206,7 +209,10 @@ class Home extends React.Component {
   }
 
   render() {
-    const {deliverOrder, returnOrder, loading} = this.props.order;
+    const {deliverOrder, returnOrder, receivedOrder, loading} =
+      this.props.order;
+    // console.log("deliverOrder",deliverOrder);
+    // console.log("returnOrder",returnOrder);
 
     // console.log("loading",loading);
     // console.log("order",this.props.order);
@@ -264,9 +270,8 @@ class Home extends React.Component {
                     size={24}
                   />
 
-                  
                   <Text style={styles.orderText}>
-                    {returnOrder?.deliveryBoyPickings?.delivered?.length}
+                    {returnOrder?.Return?.delivered?.length}
                   </Text>
                 </View>
                 <Text style={styles.orderMainText}>
@@ -283,7 +288,7 @@ class Home extends React.Component {
                   />
                   <Text style={styles.orderText}>
                     {/* {deliverOrder.deliveryBoyPickings?.delivered.length} */}
-                    0
+                    {receivedOrder?.Receiving?.assigned?.length}
                   </Text>
                 </View>
                 <Text style={styles.orderMainText}>
@@ -354,8 +359,7 @@ class Home extends React.Component {
                       ? styles.activeText
                       : styles.inActiveText
                   }>
-                  {/* {StringConstants.DELIVERY} ({deliverOrder?.pendingOrder}) */}
-                  {StringConstants.RECEIVING} (0)
+                  {StringConstants.RECEIVING} ({deliverOrder?.pendingReceive})
                 </Text>
               </TouchableOpacity>
             </View>
@@ -492,7 +496,8 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchDeliveryOrders: id => dispatch(HomeAction.deliveryOrder(id)),
     fetchReturnOrders: id => dispatch(HomeAction.returnOrder(id)),
-    getReasons: (id,login) => dispatch(HomeAction.getReasonsList(id,login)),
+    fetchReceivingOrder: id => dispatch(HomeAction.receivedOrder(id)),
+    getReasons: (id, login) => dispatch(HomeAction.getReasonsList(id, login)),
   };
 };
 

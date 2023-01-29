@@ -2,6 +2,7 @@ const INITIAL_STATE = {
   loading: false,
   deliverOrder: '',
   returnOrder: '',
+  receivedOrder:'',
   oderDetail: '',
   reasonList:''
 };
@@ -13,6 +14,12 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         deliverOrder: action.payload,
+      };
+    case actionTypes.FETCH_RECEIVED_ORDER:
+      return {
+        ...state,
+        loading: false,
+        receivedOrder: action.payload,
       };
     case actionTypes.FETCH_ORDER_DETAIL:
       return {

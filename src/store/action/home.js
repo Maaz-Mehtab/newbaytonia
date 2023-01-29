@@ -27,6 +27,25 @@ export default {
       }
     };
   },
+  receivedOrder: id => {
+    return async dispatch => {
+      let url = Endpoints.Auth.delivery_boy + id + '/dashboard?state=accept';
+      // dispatch({ type: actionTypes.LOADER_ON })
+      try {
+        let response = await Api.get(
+          Endpoints.Auth.delivery_boy + id + '/dashboard?delivery_type=receive',
+          {},
+        );
+        console.log("receivedOrder response",response)
+        dispatch({type: actionTypes.FETCH_RECEIVED_ORDER, payload: response});
+        dispatch({type: actionTypes.LOADER_OFF});
+        return Promise.resolve(response);
+      } catch (error) {
+        dispatch({type: actionTypes.LOADER_OFF});
+        return Promise.reject(error);
+      }
+    };
+  },
   returnOrder: id => {
     return async dispatch => {
       // dispatch({ type: actionTypes.LOADER_ON })
