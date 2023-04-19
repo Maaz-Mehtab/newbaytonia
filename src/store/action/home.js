@@ -36,7 +36,6 @@ export default {
           Endpoints.Auth.delivery_boy + id + '/dashboard?delivery_type=receive',
           {},
         );
-        console.log("receivedOrder response",response)
         dispatch({type: actionTypes.FETCH_RECEIVED_ORDER, payload: response});
         dispatch({type: actionTypes.LOADER_OFF});
         return Promise.resolve(response);
@@ -80,6 +79,20 @@ export default {
       }
     };
   },
+  sendOtpCode: (id, login) => {
+    return async dispatch => {
+      // dispatch({ type: actionTypes.LOADER_ON })
+      try {
+        let response = await Api.get(Endpoints.Auth.getOtp + id, login);
+        dispatch({type: actionTypes.GET_OTP, payload: response});
+        dispatch({type: actionTypes.LOADER_OFF});
+        return Promise.resolve(response);
+      } catch (error) {
+        dispatch({type: actionTypes.LOADER_OFF});
+        return Promise.reject(error);
+      }
+    };
+  },
 
   orderDetail: (id, login) => {
     return async dispatch => {
@@ -104,7 +117,7 @@ export default {
       dispatch({type: actionTypes.LOADER_ON});
       try {
         let response = await Api.put(
-          Endpoints.Auth.delivery_boy + 'pickings/' + id,
+          Endpoints.Auth.delivery_boy + 'pickings/' + id, 
           data,
           login,
         );
@@ -117,7 +130,7 @@ export default {
     };
   },
 
-  acceptMultiOrder: ( data, login) => {
+  acceptMultiOrder: (data, login) => {
     return async dispatch => {
       dispatch({type: actionTypes.LOADER_ON});
       try {

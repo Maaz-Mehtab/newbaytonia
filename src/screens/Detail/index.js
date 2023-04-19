@@ -79,23 +79,29 @@ function Detail(props) {
     }
   };
   const DeliverOrder = async () => {
-    if (deliverOrder.otpRequired && state.DeliveryType == 'order') {
-      setOtpModal(true);
-    } else {
+    try {
       const id = state.id;
       let data = {
         state: 'delivered',
       };
-      let res = await dispatch(HomeAction.acceptOrder(id, data, login));
-      console.log('res', res);
-      if (res.success) {
-        util.successMsg('Order Delivered');
-        setTimeout(() => {
-          props.navigation.replace('Drawer');
-        }, 3000);
+      if (deliverOrder.otpRequired && state.DeliveryType == 'order') {
+         let getOtpResponse = await dispatch(
+          HomeAction.sendOtpCode(id, data, login)
+        );
+        setOtpModal(true);
       } else {
-        util.errorMsg(res.message);
+        let res = await dispatch(HomeAction.acceptOrder(id, data, login));
+        if (res.success) {
+          util.successMsg('Order Delivered');
+          setTimeout(() => {
+            props.navigation.replace('Drawer');
+          }, 3000);
+        } else {
+          util.errorMsg(res.message);
+        }
       }
+    } catch (e) {
+      console.log('order Detail => DeliverOrder Exception ', e);
     }
   };
 
@@ -389,16 +395,16 @@ function Detail(props) {
 
   const saveImages = async () => {
     try {
-      setLoader(true)
+      setLoader(true);
       let url = dev_url + '/upload/picking/image/' + state.id;
       var bodyFormData = new FormData();
       let temp = images;
       let val = [];
       temp.forEach(element => {
-          val.push(element.data);
+        val.push(element.data);
       });
-      bodyFormData.append('images',JSON.stringify(val));
-     
+      bodyFormData.append('images', JSON.stringify(val));
+
       let response = await axios.post(url, bodyFormData);
       if (response?.data?.success) {
         util.successMsg(response?.data?.message);

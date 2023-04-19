@@ -3,8 +3,8 @@
 // export const BaseURL = "https://dev.oddo.baytonia.com";
 // live url
 // export const BaseURL = 'https://stage.oddo.baytonia.com';
-// export const BaseURL = 'https://oddo.baytonia.com';
-export const BaseURL = 'http://164.90.222.22:8069';
+export const BaseURL = 'https://oddo.baytonia.com';
+// export const BaseURL = 'http://164.90.222.22:8069';
 // export const BASIC_AUTH_KEY = 'Basic ZHVtbXlTZWNyZXRLZXk6ZHVtbXlTZWNyZXRLZXk=';
 export const BASIC_AUTH_KEY = 'Basic ZHVtbXlTZWNyZXRLZXk6ZHVtbXlTZWNyZXRLZXk=';
 

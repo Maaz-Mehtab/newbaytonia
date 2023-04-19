@@ -7,6 +7,7 @@ module.exports = {
     delivery_boy: '/deliveryBoy/',
     set_reason: '/deliveryBoy/set_reason/',
     register : '/deliveryBoy/registration/detail',
-    delivery_boyTypes:'/deliveryBoy/get_db_type'
+    delivery_boyTypes:'/deliveryBoy/get_db_type',
+    getOtp:'/getotp/',
   },
 };
