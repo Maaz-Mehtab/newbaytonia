@@ -268,7 +268,6 @@ function Detail(props) {
         token: otpInput,
       };
       let res = await dispatch(HomeAction.acceptOrder(id, data, login));
-      console.log('res', res);
       if (res.success) {
         util.successMsg('Order Delivered');
         setTimeout(() => {

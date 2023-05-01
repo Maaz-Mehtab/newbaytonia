@@ -122,6 +122,7 @@ export default {
           login,
         );
         dispatch({type: actionTypes.ACCEPT_ORDER, payload: response});
+        dispatch({type: actionTypes.LOADER_OFF});
         return Promise.resolve(response);
       } catch (error) {
         dispatch({type: actionTypes.LOADER_OFF});
