@@ -492,7 +492,7 @@ function Detail(props) {
                   </Text>
                 </View>
                 <View style={styles.halfView}>
-                  <Text size="xxxxSmall">{state?.pickingState}</Text>
+                  <Text size="xxxxSmall">{state?.shipmentState}</Text>
                 </View>
               </View>
             </View>
@@ -519,7 +519,7 @@ function Detail(props) {
             </View>
             <View style={styles.itemView}>
               <Text size={'xxxSmall'}>
-                {StringConstants.OrderNumberPrefix} :{orderItem?.saleOrderId}
+                {StringConstants.OrderNumberPrefix} :{orderItem?.reference}
               </Text>
             </View>
             {state?.products != undefined &&
@@ -621,7 +621,7 @@ function Detail(props) {
             )}
           </View>
 
-          {state?.pickingState == 'assigned' && (
+          {state?.shipmentState == 'assigned' && (
             <View style={styles.bottomContainer}>
               <View style={styles.buttonView}>
                 <Button btnPress={() => AcceptOrder()} label={'Accept Order'} />
@@ -673,7 +673,7 @@ function Detail(props) {
             </View>
           )}
 
-          {state?.pickingState == 'accept' && (
+          {state?.shipmentState == 'accept' && (
             <View style={styles.bottomContainer}>
               <View style={styles.buttonView}>
                 <Button
@@ -684,7 +684,7 @@ function Detail(props) {
             </View>
           )}
 
-          {state?.pickingState == 'accept' && (
+          {state?.shipmentState == 'accept' && (
             <View style={styles.bottomContainer}>
               <View style={styles.buttonView}>
                 <Button
@@ -694,7 +694,7 @@ function Detail(props) {
               </View>
             </View>
           )}
-          {state?.pickingState == 'accept' && (
+          {state?.shipmentState == 'accept' && (
             <View style={styles.bottomContainer}>
               <View style={styles.buttonView}>
                 <UnFilledButton

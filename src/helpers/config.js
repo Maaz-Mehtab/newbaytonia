@@ -11,7 +11,7 @@ export const BASIC_AUTH_KEY = 'Basic ZHVtbXlTZWNyZXRLZXk6ZHVtbXlTZWNyZXRLZXk=';
 
 // live user:
 // email:nuha@baytonia.com
-// password:'N123456789#'
+// password:'Nn123456789!'
 
 
 // live url: http://164.90.222.22:8069
@@ -19,6 +19,9 @@ export const BASIC_AUTH_KEY = 'Basic ZHVtbXlTZWNyZXRLZXk6ZHVtbXlTZWNyZXRLZXk=';
 // password:'admin#'
 // email:nuha@baytonia.com
 // password:'N123456789!'
+
+// login:nuha@baytonia.com
+// pwd:N123456789!
 
 
 

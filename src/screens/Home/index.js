@@ -119,9 +119,10 @@ class Home extends React.Component {
 
   fetchDashboardData = () => {
     let id = this.props.user?.userdata?.deliveryBoyPartnerId;
-    this.props.fetchDeliveryOrders(id);
-    this.props.fetchReturnOrders(id);
-    this.props.fetchReceivingOrder(id);
+    const  login= this.props.user.login
+    this.props.fetchDeliveryOrders(id,login);
+    this.props.fetchReturnOrders(id,login);
+    this.props.fetchReceivingOrder(id,login);
   };
 
   setOnline = async () => {
@@ -173,15 +174,12 @@ class Home extends React.Component {
       let data = [];
       let title = '';
       if (this.state.selectedIndex == 0) {
-        data = this.props.order?.deliverOrder?.deliveryBoyPickings[param];
-        data = data.filter(a => a.DeliveryType == 'order');
+        data = this.props.order?.deliverOrder?.Shipments[param];
+        // data = data.filter(a => a.DeliveryType == 'order');
       } else if (this.state.selectedIndex == 1) {
         data = this.props.order?.returnOrder?.Return[param];
-        data = data.filter(a => a.DeliveryType != 'order');
-      } else {
-        data = this.props.order?.receivedOrder?.Receiving[param];
-        data = data.filter(a => a.DeliveryType != 'order');
-      }
+        // data = data.filter(a => a.DeliveryType != 'order');
+      } 
       title =
         param == 'assigned'
           ? StringConstants.AssignedOrders
@@ -211,11 +209,14 @@ class Home extends React.Component {
   render() {
     const {deliverOrder, returnOrder, receivedOrder, loading} =
       this.props.order;
-    // console.log("deliverOrder",deliverOrder);
+    // console.log("this.props.order",this.props.order);
+    const shipments= deliverOrder?.Shipments
+    const returnsOrder= returnOrder?.Return
+    // console.log("shipments",shipments);
+    // console.log("returnsOrder",returnsOrder);
     // console.log("returnOrder",returnOrder);
 
     // console.log("loading",loading);
-    // console.log("order",this.props.order);
     return (
       <LinearGradient colors={['#f2f2f2', '#f2f2f2']} style={styles.container}>
         <SafeAreaView style={styles.safeAreaTop} />
@@ -254,7 +255,8 @@ class Home extends React.Component {
                     size={24}
                   />
                   <Text style={styles.orderText}>
-                    {deliverOrder.deliveryBoyPickings?.delivered.length}
+                  
+                    {shipments?.delivered?.length}
                   </Text>
                 </View>
                 <Text style={styles.orderMainText}>
@@ -271,7 +273,7 @@ class Home extends React.Component {
                   />
 
                   <Text style={styles.orderText}>
-                    {returnOrder?.Return?.delivered?.length}
+                    {returnsOrder?.delivered?.length}
                   </Text>
                 </View>
                 <Text style={styles.orderMainText}>
@@ -279,7 +281,7 @@ class Home extends React.Component {
                 </Text>
               </View>
 
-              <View style={styles.ParentTopView}>
+              {/* <View style={styles.ParentTopView}>
                 <View style={styles.ordersView}>
                   <Icons.MaterialCommunityIcons
                     name="truck-check-outline"
@@ -287,14 +289,13 @@ class Home extends React.Component {
                     size={24}
                   />
                   <Text style={styles.orderText}>
-                    {/* {deliverOrder.deliveryBoyPickings?.delivered.length} */}
-                    {receivedOrder?.Receiving?.assigned?.length}
+                    {receivedOrder?.deliveryBoyShipments?.assigned?.length}
                   </Text>
                 </View>
                 <Text style={styles.orderMainText}>
                   {StringConstants.VendorPos}
                 </Text>
-              </View>
+              </View> */}
             </View>
 
             <View style={styles.myOrderView}>
@@ -345,7 +346,7 @@ class Home extends React.Component {
                 </Text>
               </TouchableOpacity>
 
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 activeOpacity={1}
                 onPress={() => this.setSelectedItem(2)}
                 style={
@@ -361,7 +362,7 @@ class Home extends React.Component {
                   }>
                   {StringConstants.RECEIVING} ({deliverOrder?.pendingReceive})
                 </Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
 
             <View style={{marginBottom: 20}}>
@@ -494,9 +495,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchDeliveryOrders: id => dispatch(HomeAction.deliveryOrder(id)),
-    fetchReturnOrders: id => dispatch(HomeAction.returnOrder(id)),
-    fetchReceivingOrder: id => dispatch(HomeAction.receivedOrder(id)),
+    fetchDeliveryOrders: (id,login) => dispatch(HomeAction.deliveryOrder(id,login)),
+    fetchReturnOrders: (id,login) => dispatch(HomeAction.returnOrder(id,login)),
+    fetchReceivingOrder: (id,login) => dispatch(HomeAction.receivedOrder(id,login)),
     getReasons: (id, login) => dispatch(HomeAction.getReasonsList(id, login)),
   };
 };

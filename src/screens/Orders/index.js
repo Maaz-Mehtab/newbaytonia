@@ -102,7 +102,7 @@ function Order(props) {
 
         <View style={styles.itemView}>
           <Text size={'xSmall'}>
-            {StringConstants.OrderNameLabelPrefix} {item?.saleOrderId}
+            {StringConstants.OrderNameLabelPrefix} {item?.customerName}
           </Text>
         </View>
 

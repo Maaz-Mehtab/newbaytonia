@@ -6,7 +6,7 @@ import moment from 'moment';
 const DateCheck = () => {
   let value = false;
   const today = moment(new Date()).format('YYYY-MM-DD');
-  var a = moment('2023-06-30');
+  var a = moment('2023-05-30');
   var b = moment(today);
   var dif = a.diff(b, 'days');
   value = dif > 0 ? true : false;

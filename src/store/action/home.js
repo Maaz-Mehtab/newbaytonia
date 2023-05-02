@@ -9,14 +9,14 @@ export default {
     };
   },
 
-  deliveryOrder: id => {
+  deliveryOrder: (id,login) => {
     return async dispatch => {
       let url = Endpoints.Auth.delivery_boy + id + '/dashboard';
       // dispatch({ type: actionTypes.LOADER_ON })
       try {
         let response = await Api.get(
           Endpoints.Auth.delivery_boy + id + '/dashboard',
-          {},
+          login,
         );
         dispatch({type: actionTypes.FETCH_DELIVER_ORDER, payload: response});
         dispatch({type: actionTypes.LOADER_OFF});
@@ -27,14 +27,14 @@ export default {
       }
     };
   },
-  receivedOrder: id => {
+  receivedOrder: (id,login) => {
     return async dispatch => {
       let url = Endpoints.Auth.delivery_boy + id + '/dashboard?state=accept';
       // dispatch({ type: actionTypes.LOADER_ON })
       try {
         let response = await Api.get(
           Endpoints.Auth.delivery_boy + id + '/dashboard?delivery_type=receive',
-          {},
+          login,
         );
         console.log("receivedOrder response",response)
         dispatch({type: actionTypes.FETCH_RECEIVED_ORDER, payload: response});
@@ -46,13 +46,13 @@ export default {
       }
     };
   },
-  returnOrder: id => {
+  returnOrder:(id,login) => {
     return async dispatch => {
       // dispatch({ type: actionTypes.LOADER_ON })
       try {
         let response = await Api.get(
           Endpoints.Auth.delivery_boy + id + '/dashboard?delivery_type=return',
-          {},
+          login,
         );
         dispatch({type: actionTypes.FETCH_RETURN_ORDER, payload: response});
         dispatch({type: actionTypes.LOADER_OFF});
@@ -85,8 +85,10 @@ export default {
     return async dispatch => {
       dispatch({type: actionTypes.LOADER_ON});
       try {
+        let url = Endpoints.Auth.delivery_boy + 'shipments/' + id;
+        console.log("url",url);
         let response = await Api.get(
-          Endpoints.Auth.delivery_boy + 'pickings/' + id,
+          Endpoints.Auth.delivery_boy + 'shipments/' + id,
           login,
         );
         dispatch({type: actionTypes.FETCH_ORDER_DETAIL, payload: response});
